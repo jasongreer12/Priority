@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SideMenuView: View {
     @Binding var isSideMenuOpen: Bool
+    var onProfileTap: (() -> Void)?
     
     var body: some View {
         HStack(spacing: 0) {
@@ -35,11 +36,12 @@ struct SideMenuView: View {
                     .padding(.vertical, 1)
                 
                 Button("Profile") {
-                    isSideMenuOpen = false
-                }
-                .padding()
-                .frame(maxWidth: .infinity)
-                .multilineTextAlignment(.center)
+                                    isSideMenuOpen = false
+                                    onProfileTap?()  // trigger the profile view
+                                }
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .multilineTextAlignment(.center)
                 
                 Divider()
                     .padding(.vertical, 1)

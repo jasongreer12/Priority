@@ -11,6 +11,7 @@ struct ContentView: View {
     @State private var isLeftSideMenuOpen = false
     @State private var isRightSideMenuOpen = false
     @State private var showAddTaskSheet = false
+    @State private var isProfileMenuOpen = false
     @State var user: User?  // When nil, user is not logged in.
 
     var bottomMenuWidth: CGFloat {
@@ -27,7 +28,10 @@ struct ContentView: View {
                         .fontWeight(.bold)
                     Text("Please log in to continue.")
                         .foregroundColor(.secondary)
-                    Button("Login", action: self.login)
+                    Button("Login") {
+                        print("Login button tapped")
+                        self.login()
+                    }
                         .padding()
                         .background(Color.blue)
                         .foregroundColor(.white)
@@ -85,15 +89,18 @@ struct ContentView: View {
                     
                     // Left side menu overlay.
                     if isLeftSideMenuOpen {
-                        Color.black.opacity(0.3)
-                            .ignoresSafeArea()
-                            .onTapGesture {
-                                withAnimation { isLeftSideMenuOpen = false }
-                            }
-                        SideMenuView(isSideMenuOpen: $isLeftSideMenuOpen)
-                            .transition(.move(edge: .leading))
-                            .zIndex(2)
-                    }
+                                            Color.black.opacity(0.3)
+                                                .ignoresSafeArea()
+                                                .onTapGesture {
+                                                    withAnimation { isLeftSideMenuOpen = false }
+                                                }
+                                            SideMenuView(isSideMenuOpen: $isLeftSideMenuOpen, onProfileTap: {
+                                                print("onProfileTap triggered")
+                                                isProfileMenuOpen = true
+                                            })
+                                            .transition(.move(edge: .leading))
+                                            .zIndex(2)
+                                        }
                     
                     // Right side menu overlay.
                     if isRightSideMenuOpen {
@@ -112,6 +119,12 @@ struct ContentView: View {
                     AddTaskView()
                         .presentationDetents([.fraction(0.75)])
                 }
+                // Present ProfileView as a full-screen cover when isProfileMenuOpen is true.
+                .sheet(isPresented: $isProfileMenuOpen) {
+                                    if let user = user {
+                                        ProfileView(user: user, logout: self.logout)
+                                    }
+                                }
             }
         }
     }
@@ -126,17 +139,25 @@ struct ContentView_Previews: PreviewProvider {
 
 extension ContentView {
     func login() {
+        print("login called in extension")
         Auth0
-            .webAuth()
+        .webAuth()
+        .useEphemeralSession() // No SSO, therefore no alert box
+        .parameters(["prompt": "login"]) // Ignore the cookie (if present) and show the login page
             //.useHTTPS() // Uncomment if needed for iOS 17.4+ / macOS 14.4+
             .start { result in
                 switch result {
                 case .success(let credentials):
                     DispatchQueue.main.async {
-                        self.user = User(from: credentials.idToken)
-                    }
+                                            if let newUser = User(from: credentials.idToken) {
+                                                print("User successfully parsed: \(newUser)")
+                                                self.user = newUser
+                                            } else {
+                                                print("Failed to parse user from token")
+                                            }
+                                        }
                 case .failure(let error):
-                    print("Login failed with: \(error)")
+                    print("Failed with: \(error)")
                 }
             }
     }
@@ -144,7 +165,9 @@ extension ContentView {
     func logout() {
         Auth0
             .webAuth()
-            .useHTTPS() // Use if needed for iOS 17.4+ / macOS 14.4+
+            //.useHTTPS() // Use if needed for iOS 17.4+ / macOS 14.4+
+            .useEphemeralSession() // No SSO, therefore no alert box
+            .parameters(["prompt": "logout"])
             .clearSession { result in
                 switch result {
                 case .success:
