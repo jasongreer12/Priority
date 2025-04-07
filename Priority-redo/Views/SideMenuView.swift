@@ -34,7 +34,7 @@ struct SideMenuView: View {
                 Divider()
                     .padding(.vertical, 1)
                 
-                Button("Option 2") {
+                Button("Profile") {
                     isSideMenuOpen = false
                 }
                 .padding()
