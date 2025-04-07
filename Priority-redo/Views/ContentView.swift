@@ -6,98 +6,180 @@
 //
 
 import SwiftUI
+import Auth0
 
 struct ContentView: View {
     @State private var isLeftSideMenuOpen = false
     @State private var isRightSideMenuOpen = false
     @State private var showAddTaskSheet = false
-
+    @State private var isProfileMenuOpen = false
+    @State private var showCalendarSheet = false   // New state for Calendar sheet
+    @State var user: User?  // When nil, user is not logged in.
 
     var bottomMenuWidth: CGFloat {
-        return UIScreen.main.bounds.width - 20
+        UIScreen.main.bounds.width - 20
     }
     
     var body: some View {
-        ZStack {
-            HomeView()
-            
-            // Bottom menu overlay pinned to the bottom.
-            VStack {
-                Spacer()
-                HStack {
-                    // Left button: toggles left side menu.
-                    Button(action: {
-                        withAnimation {
-                            isLeftSideMenuOpen.toggle()
-                        }
-                    }) {
-                        Image(systemName: "line.horizontal.3")
-                            .font(.title)
-                            .padding()
+        Group {
+            if user == nil {
+                // Login screen.
+                VStack(spacing: 20) {
+                    Text("Welcome to Priority!")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                    Text("Please log in to continue.")
+                        .foregroundColor(.secondary)
+                    Button("Login") {
+                        print("Login button tapped")
+                        self.login()
                     }
-                    .frame(maxWidth: .infinity)
-                    
-                    // Plus button: opens the Add Task sheet.
-                    Button(action: {
-                        showAddTaskSheet = true
-                    }) {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.system(size: 40))
-                            .padding()
-                    }
-                    .frame(maxWidth: .infinity)
-                    
-                    // Right button: toggles right side menu.
-                    Button(action: {
-                        withAnimation {
-                            isRightSideMenuOpen.toggle()
-                        }
-                    }) {
-                        Image(systemName: "ellipsis")
-                            .font(.title)
-                            .padding()
-                    }
-                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
                 }
-                .frame(width: bottomMenuWidth, height: 65)
-                .background(
-                    Color(UIColor.systemBackground)
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
-                        .shadow(color: .gray.opacity(0.4), radius: 4, x: 0, y: -2)
-                )
-                .padding(.bottom, 30)
-                .zIndex(1)
-            }
-            
-            // Left side menu overlay.
-            if isLeftSideMenuOpen {
-                Color.black.opacity(0.3)
-                    .ignoresSafeArea()
-                    .onTapGesture {
-                        withAnimation { isLeftSideMenuOpen = false }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(UIColor.systemBackground))
+            } else {
+                // Main app interface when user is logged in.
+                ZStack {
+                    HomeView()
+                        .edgesIgnoringSafeArea(.all)
+                    
+                    // Bottom menu overlay.
+                    VStack {
+                        Spacer()
+                        HStack {
+                            // Left button: toggles left side menu.
+                            Button(action: {
+                                withAnimation { isLeftSideMenuOpen.toggle() }
+                            }) {
+                                Image(systemName: "line.horizontal.3")
+                                    .font(.title)
+                                    .padding()
+                            }
+                            .frame(maxWidth: .infinity)
+                            
+                            // Plus button: opens the Add Task sheet.
+                            Button(action: { showAddTaskSheet = true }) {
+                                Image(systemName: "plus.circle.fill")
+                                    .font(.system(size: 40))
+                                    .padding()
+                            }
+                            .frame(maxWidth: .infinity)
+                            
+                            // Right button: toggles right side menu.
+                            Button(action: {
+                                withAnimation { isRightSideMenuOpen.toggle() }
+                            }) {
+                                Image(systemName: "ellipsis")
+                                    .font(.title)
+                                    .padding()
+                            }
+                            .frame(maxWidth: .infinity)
+                        }
+                        .frame(width: bottomMenuWidth, height: 65)
+                        .background(
+                            Color(UIColor.systemBackground)
+                                .clipShape(RoundedRectangle(cornerRadius: 16))
+                                .shadow(color: .gray.opacity(0.4), radius: 4, x: 0, y: -2)
+                        )
+                        .padding(.bottom, 30)
+                        .zIndex(1)
                     }
-                SideMenuView(isSideMenuOpen: $isLeftSideMenuOpen)
-                    .transition(.move(edge: .leading))
-                    .zIndex(2)
-            }
-            
-            // Right side menu overlay.
-            if isRightSideMenuOpen {
-                Color.black.opacity(0.3)
-                    .ignoresSafeArea()
-                    .onTapGesture {
-                        withAnimation { isRightSideMenuOpen = false }
+                    
+                    // Left side menu overlay.
+                    if isLeftSideMenuOpen {
+                        Color.black.opacity(0.3)
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                withAnimation { isLeftSideMenuOpen = false }
+                            }
+                        SideMenuView(isSideMenuOpen: $isLeftSideMenuOpen,
+                                     onProfileTap: {
+                                        print("Profile tapped")
+                                        isProfileMenuOpen = true
+                                     },
+                                     onCalendarTap: {
+                                        showCalendarSheet = true
+                                     })
+                        .transition(.move(edge: .leading))
+                        .zIndex(2)
                     }
-                SideMenuRightView(isSideMenuOpen: $isRightSideMenuOpen)
-                    .transition(.move(edge: .trailing))
-                    .zIndex(2)
+                    
+                    // Right side menu overlay.
+                    if isRightSideMenuOpen {
+                        Color.black.opacity(0.3)
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                withAnimation { isRightSideMenuOpen = false }
+                            }
+                        SideMenuRightView(isSideMenuOpen: $isRightSideMenuOpen)
+                            .transition(.move(edge: .trailing))
+                            .zIndex(2)
+                    }
+                }
+                .navigationBarHidden(true)
+                .sheet(isPresented: $showAddTaskSheet) {
+                    AddTaskView()
+                        .presentationDetents([.fraction(0.75)])
+                }
+                // Present ProfileView as a full-screen sheet.
+                .sheet(isPresented: $isProfileMenuOpen) {
+                    if let user = user {
+                        ProfileView(user: user, logout: self.logout)
+                    }
+                }
+                // Present CalendarView as a sheet.
+                .sheet(isPresented: $showCalendarSheet) {
+                    CalendarView()
+                }
             }
         }
-        .navigationBarHidden(true)
-        .sheet(isPresented: $showAddTaskSheet) {
-            AddTaskView()
-                .presentationDetents([.fraction(0.75)])
-        }
+    }
+}
+
+// (The existing login and logout extensions remain unchanged.)
+extension ContentView {
+    func login() {
+        print("login called in extension")
+        Auth0
+            .webAuth()
+            .useEphemeralSession()
+            .parameters(["prompt": "login"])
+            .start { result in
+                switch result {
+                case .success(let credentials):
+                    DispatchQueue.main.async {
+                        if let newUser = User(from: credentials.idToken) {
+                            print("User successfully parsed: \(newUser)")
+                            self.user = newUser
+                        } else {
+                            print("Failed to parse user from token")
+                        }
+                    }
+                case .failure(let error):
+                    print("Failed with: \(error)")
+                }
+            }
+    }
+
+    func logout() {
+        Auth0
+            .webAuth()
+            .useEphemeralSession()
+            .parameters(["prompt": "logout"])
+            .clearSession { result in
+                switch result {
+                case .success:
+                    DispatchQueue.main.async {
+                        self.user = nil
+                    }
+                case .failure(let error):
+                    print("Logout failed with: \(error)")
+                }
+            }
     }
 }
 

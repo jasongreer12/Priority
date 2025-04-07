@@ -56,10 +56,6 @@ struct SideMenuRightView: View {
                 Divider()
                     .padding(.vertical, 1)
                 
-                Button("Sign Out") {
-                    isSideMenuOpen = false
-                }
-                
                 Divider()
                     .padding(.vertical, 1)
             

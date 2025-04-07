@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct Priority_redoApp: App {
+    @StateObject private var taskViewModel = TaskViewModel()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(taskViewModel)
         }
     }
 }
