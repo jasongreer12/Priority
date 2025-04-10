@@ -13,6 +13,8 @@ final class Task: NSManagedObject {
     @NSManaged var title: String
     @NSManaged var details: String
     @NSManaged var isComplete: Bool
+    @NSManaged var dueDate: Date
+    @NSManaged var estimatedTimeToComplete: Float
     
     override func awakeFromInsert() {
         super.awakeFromInsert()
