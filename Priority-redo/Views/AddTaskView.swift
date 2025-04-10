@@ -10,6 +10,7 @@ import SwiftUI
 struct AddTaskView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var taskViewModel: TaskViewModel
+    @ObservedObject var vm: EditTaskViewModel
     
     @State private var title: String = ""
     @State private var details: String = ""
@@ -17,13 +18,22 @@ struct AddTaskView: View {
     var body: some View {
         Form {
             Section(header: Text("Task Info")) {
+                /*TextField("Title", text: $title)
+                TextField("Details", text: $details)*/
                 TextField("Title", text: $title)
-                TextField("Details", text: $details)
+                TextField("Details", text: $vm.task.details)
             }
             
             Button(action: {
                 // Add new task
-                taskViewModel.addTask(title: title, details: details)
+                //taskViewModel.addTask(title: title, details: details)
+                do {
+                    vm.task.title = title
+                    try vm.save()
+                    //dismiss()
+                } catch {
+                    print(error)
+                }
                 presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Save")
@@ -35,4 +45,8 @@ struct AddTaskView: View {
         // No special code needed here for 3/4 coverage
         // The .sheet call in ContentView controls the height.
     }
+}
+
+#Preview {
+    AddTaskView(vm: .init(manager: .shared))
 }

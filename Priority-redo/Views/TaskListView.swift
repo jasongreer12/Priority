@@ -10,8 +10,11 @@ import SwiftUI
 struct TaskListView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
     
+    //May be better way to do this
+    @FetchRequest(fetchRequest: Task.all()) private var tasks
+    
     var body: some View {
-        List {
+        /*List {
             ForEach(taskViewModel.tasks) { task in
                 TaskRowView(task: task)
             }
@@ -21,6 +24,19 @@ struct TaskListView: View {
                     taskViewModel.deleteTask(task)
                 }
             }
+        }
+        .listStyle(PlainListStyle())*/
+        
+        List {
+            ForEach(tasks, id: \.objectID) { task in
+                TaskRowView(task: task)
+            }
+            /*.onDelete { indexSet in
+                indexSet.forEach { index in
+                    let task = taskViewModel.tasks[index]
+                    taskViewModel.deleteTask(task)
+                }
+            }*/
         }
         .listStyle(PlainListStyle())
     }

@@ -8,36 +8,42 @@
 import SwiftUI
 
 struct TaskRowView: View {
-    @EnvironmentObject var taskViewModel: TaskViewModel
-    var task: TaskModel
+    //@EnvironmentObject var taskViewModel: TaskViewModel
+    //var task: TaskModel
+    @Environment(\.managedObjectContext) private var moc
+    
+    @ObservedObject var task: Task
 
     var body: some View {
         HStack {
             // Tapping the icon or row toggles completion.
             Button(action: {
-                taskViewModel.toggleTaskCompletion(task)
+                //taskViewModel.toggleTaskCompletion(task)
+                toggleComplete()
             }) {
-                Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(task.isCompleted ? .green : .gray)
+                Image(systemName: task.isComplete ? "checkmark.circle.fill" : "circle")
+                    .foregroundColor(task.isComplete ? .green : .gray)
                     .font(.title)
             }
             .buttonStyle(PlainButtonStyle())
             
             Text(task.title)
-                .foregroundColor(task.isCompleted ? .gray : .primary)
-                .strikethrough(task.isCompleted, color: .gray)
+                .foregroundColor(task.isComplete ? .gray : .primary)
+                .strikethrough(task.isComplete, color: .gray)
             
             Spacer()
         }
         .padding(.vertical, 8)
         .contentShape(Rectangle()) // Makes the entire row tappable.
         .onTapGesture {
-            taskViewModel.toggleTaskCompletion(task)
+            //taskViewModel.toggleTaskCompletion(task)
+            toggleComplete()
         }
         // Leading swipe: mark complete.
         .swipeActions(edge: .leading, allowsFullSwipe: true) {
             Button {
-                taskViewModel.toggleTaskCompletion(task)
+                //taskViewModel.toggleTaskCompletion(task)
+                toggleComplete()
             } label: {
                 Label("Complete", systemImage: "checkmark.circle.fill")
             }
@@ -46,7 +52,7 @@ struct TaskRowView: View {
         // Trailing swipe: delete task.
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             Button(role: .destructive) {
-                taskViewModel.deleteTask(task)
+                //taskViewModel.deleteTask(task)
             } label: {
                 Label("Delete", systemImage: "trash.fill")
             }
@@ -54,11 +60,25 @@ struct TaskRowView: View {
     }
 }
 
-struct TaskRowView_Previews: PreviewProvider {
+private extension TaskRowView {
+    func toggleComplete() {
+        task.isComplete.toggle()
+        do{
+            if moc.hasChanges {
+                try moc.save()
+            }
+        } catch {
+            print(error)
+        }
+    }
+}
+
+/*struct TaskRowView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskRowView(task: TaskModel(title: "Sample Task"))
+        TaskRowView(task: Task())
             .environmentObject(TaskViewModel())
             .previewLayout(.sizeThatFits)
             .padding()
     }
 }
+*/

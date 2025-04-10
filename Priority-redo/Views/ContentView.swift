@@ -13,6 +13,9 @@ struct ContentView: View {
     @State private var showAddTaskSheet = false
     @State private var isProfileMenuOpen = false
     @State var user: User?  // When nil, user is not logged in.
+    //@FetchRequest(fetchRequest: Task.all()) private var tasks
+    
+    var taskManager = TaskManager.shared
 
     var bottomMenuWidth: CGFloat {
         UIScreen.main.bounds.width - 20
@@ -116,7 +119,8 @@ struct ContentView: View {
                 }
                 .navigationBarHidden(true)
                 .sheet(isPresented: $showAddTaskSheet) {
-                    AddTaskView()
+                    //May need different input?
+                    AddTaskView(vm: .init(manager: taskManager))
                         .presentationDetents([.fraction(0.75)])
                 }
                 // Present ProfileView as a full-screen cover when isProfileMenuOpen is true.

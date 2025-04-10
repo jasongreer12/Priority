@@ -42,3 +42,7 @@ struct EditTaskView: View {
         .navigationTitle("Edit Task")
     }
 }
+
+#Preview {
+    EditTaskView(task: .init(id: UUID(), title: "Test", details: "Test details"))
+}

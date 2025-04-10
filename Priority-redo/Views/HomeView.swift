@@ -9,7 +9,9 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
-
+    
+    @FetchRequest(fetchRequest: Task.all()) private var tasks
+    
     var body: some View {
         VStack(spacing: 20) {
             Text("Priority")
@@ -26,7 +28,15 @@ struct HomeView: View {
             
             Spacer()
             
-            if !taskViewModel.tasks.isEmpty {
+            /*if !taskViewModel.tasks.isEmpty {
+                TaskListView()
+                    .frame(width: UIScreen.main.bounds.width - 40,
+                           height: UIScreen.main.bounds.width - 40)
+                    .cornerRadius(16)
+                    .padding(.top, 36)
+                    .padding(.horizontal, 20)
+            }*/
+            if !tasks.isEmpty {
                 TaskListView()
                     .frame(width: UIScreen.main.bounds.width - 40,
                            height: UIScreen.main.bounds.width - 40)

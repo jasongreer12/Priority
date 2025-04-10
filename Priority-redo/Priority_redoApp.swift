@@ -15,6 +15,7 @@ struct Priority_redoApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(taskViewModel)
+                .environment(\.managedObjectContext, TaskManager.shared.viewContext)
         }
     }
 }
