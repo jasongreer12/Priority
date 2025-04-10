@@ -13,6 +13,8 @@ struct TaskRowView: View {
     @Environment(\.managedObjectContext) private var moc
     
     @ObservedObject var task: Task
+    
+    var taskManager = TaskManager.shared
 
     var body: some View {
         HStack {
@@ -53,6 +55,11 @@ struct TaskRowView: View {
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             Button(role: .destructive) {
                 //taskViewModel.deleteTask(task)
+                do{
+                    try delete(task)
+                } catch {
+                    print (error)
+                }
             } label: {
                 Label("Delete", systemImage: "trash.fill")
             }
@@ -69,6 +76,16 @@ private extension TaskRowView {
             }
         } catch {
             print(error)
+        }
+    }
+    
+    func delete(_ task: Task) throws {
+        let context = taskManager.viewContext
+        let existigTask = try context.existingObject(with: task.objectID)
+        context.delete(existigTask)
+        
+        if moc.hasChanges {
+            try moc.save()
         }
     }
 }
