@@ -1,9 +1,11 @@
 //
-//  ProgressRingView.swift
-//  Priority-redo
+//  WidgetRingView.swift
+//  PriorityWidgetExtension
 //
-//  Created by Alex on 3/7/25.
+//  Created by Alex on 4/10/25.
 //
+
+import Foundation
 import SwiftUI
 
 struct ProgressRingView: View {
@@ -14,20 +16,16 @@ struct ProgressRingView: View {
         ZStack {
             // Background circle
             Circle()
-                .stroke(lineWidth: 20)
+                .stroke(lineWidth: 10)
                 .foregroundColor(Color.gray.opacity(0.2))
             
             // Animated progress circle.
             Circle()
                 .trim(from: 0, to: CGFloat(animatedProgress))
-                .stroke(style: StrokeStyle(lineWidth: 20, lineCap: .round))
+                .stroke(style: StrokeStyle(lineWidth: 10, lineCap: .round))
                 .foregroundColor(progressRingColor(for: animatedProgress))
                 .rotationEffect(.degrees(-90))
                 .animation(.easeInOut(duration: 1), value: animatedProgress)
-            
-            // Large percentage text inside the circle.
-            Text("\(Int(animatedProgress * 100))%")
-                .font(.system(size: 30, weight: .bold))
         }
         .onAppear {
             animatedProgress = progress
@@ -47,13 +45,5 @@ struct ProgressRingView: View {
         } else {
             return .green
         }
-    }
-}
-
-struct ProgressRingView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProgressRingView(progress: 0.75)
-            .previewLayout(.sizeThatFits)
-            .padding()
     }
 }
