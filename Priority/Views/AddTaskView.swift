@@ -1,26 +1,18 @@
 //
-//  EditTaskView.swift
-//  Priority-redo
+//  AddTaskView.swift
+//  Priority 
 //
 //  Created by Alex on 3/7/25.
 //
 
 import SwiftUI
 
-struct EditTaskView: View {
+struct AddTaskView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var taskViewModel: TaskViewModel
     
-    let task: TaskModel
-    
-    @State private var title: String
-    @State private var details: String
-    
-    init(task: TaskModel) {
-        self.task = task
-        _title = State(initialValue: task.title)
-        _details = State(initialValue: task.details)
-    }
+    @State private var title: String = ""
+    @State private var details: String = ""
     
     var body: some View {
         Form {
@@ -30,15 +22,17 @@ struct EditTaskView: View {
             }
             
             Button(action: {
-                // Update the existing task
-                taskViewModel.updateTask(task, title: title, details: details)
+                // Add new task
+                taskViewModel.addTask(title: title, details: details)
                 presentationMode.wrappedValue.dismiss()
             }) {
-                Text("Save Changes")
+                Text("Save")
                     .frame(maxWidth: .infinity)
             }
             .disabled(title.isEmpty)
         }
-        .navigationTitle("Edit Task")
+        .navigationTitle("Add Task")
+        // No special code needed here for 3/4 coverage
+        // The .sheet call in ContentView controls the height.
     }
 }

@@ -13,13 +13,13 @@
 
 /* Begin PBXFileReference section */
 		D8798AAE2DA345F9007C3E65 /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Auth0.plist; sourceTree = "<group>"; };
-		FAF550B42D7B720E009C46D5 /* Priority-redo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Priority-redo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAF550B42D7B720E009C46D5 /* Priority.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Priority.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		FAF550B62D7B720E009C46D5 /* Priority-redo */ = {
+		FAF550B62D7B720E009C46D5 /* Priority */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Priority-redo";
+			path = Priority;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -40,7 +40,7 @@
 			isa = PBXGroup;
 			children = (
 				D8798AAE2DA345F9007C3E65 /* Auth0.plist */,
-				FAF550B62D7B720E009C46D5 /* Priority-redo */,
+				FAF550B62D7B720E009C46D5 /* Priority */,
 				FAF550B52D7B720E009C46D5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,7 +48,7 @@
 		FAF550B52D7B720E009C46D5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FAF550B42D7B720E009C46D5 /* Priority-redo.app */,
+				FAF550B42D7B720E009C46D5 /* Priority.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -56,9 +56,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FAF550B32D7B720E009C46D5 /* Priority-redo */ = {
+		FAF550B32D7B720E009C46D5 /* Priority */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FAF550C22D7B7211009C46D5 /* Build configuration list for PBXNativeTarget "Priority-redo" */;
+			buildConfigurationList = FAF550C22D7B7211009C46D5 /* Build configuration list for PBXNativeTarget "Priority" */;
 			buildPhases = (
 				FAF550B02D7B720E009C46D5 /* Sources */,
 				FAF550B12D7B720E009C46D5 /* Frameworks */,
@@ -69,14 +69,14 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				FAF550B62D7B720E009C46D5 /* Priority-redo */,
+				FAF550B62D7B720E009C46D5 /* Priority */,
 			);
-			name = "Priority-redo";
+			name = Priority;
 			packageProductDependencies = (
 				D8798AAA2DA344FA007C3E65 /* Auth0 */,
 			);
 			productName = "Priority-redo";
-			productReference = FAF550B42D7B720E009C46D5 /* Priority-redo.app */;
+			productReference = FAF550B42D7B720E009C46D5 /* Priority.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -94,7 +94,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FAF550AF2D7B720E009C46D5 /* Build configuration list for PBXProject "Priority-redo" */;
+			buildConfigurationList = FAF550AF2D7B720E009C46D5 /* Build configuration list for PBXProject "Priority" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -111,7 +111,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FAF550B32D7B720E009C46D5 /* Priority-redo */,
+				FAF550B32D7B720E009C46D5 /* Priority */,
 			);
 		};
 /* End PBXProject section */
@@ -262,13 +262,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Priority-redo/Priority-redo.entitlements";
+				CODE_SIGN_ENTITLEMENTS = Priority/Priority.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Priority-redo/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Priority/Preview Content\"";
 				DEVELOPMENT_TEAM = BNC3G49435;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Priority;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -279,7 +280,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Alexander-Seda.Priority-redo";
+				PRODUCT_BUNDLE_IDENTIFIER = "Alexander-Seda.Priority";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -292,13 +293,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Priority-redo/Priority-redo.entitlements";
+				CODE_SIGN_ENTITLEMENTS = Priority/Priority.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Priority-redo/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Priority/Preview Content\"";
 				DEVELOPMENT_TEAM = BNC3G49435;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Priority;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -309,7 +311,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Alexander-Seda.Priority-redo";
+				PRODUCT_BUNDLE_IDENTIFIER = "Alexander-Seda.Priority";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -320,7 +322,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FAF550AF2D7B720E009C46D5 /* Build configuration list for PBXProject "Priority-redo" */ = {
+		FAF550AF2D7B720E009C46D5 /* Build configuration list for PBXProject "Priority" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FAF550C02D7B7211009C46D5 /* Debug */,
@@ -329,7 +331,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FAF550C22D7B7211009C46D5 /* Build configuration list for PBXNativeTarget "Priority-redo" */ = {
+		FAF550C22D7B7211009C46D5 /* Build configuration list for PBXNativeTarget "Priority" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FAF550C32D7B7211009C46D5 /* Debug */,
