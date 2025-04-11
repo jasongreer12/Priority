@@ -11,12 +11,36 @@
 		D8798AAF2DA34604007C3E65 /* Auth0.plist in Resources */ = {isa = PBXBuildFile; fileRef = D8798AAE2DA345F9007C3E65 /* Auth0.plist */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		6268F48A2DA961360023F753 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAF550AC2D7B720E009C46D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAF550B32D7B720E009C46D5;
+			remoteInfo = "Priority-redo";
+		};
+		6268F4992DA964B40023F753 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAF550AC2D7B720E009C46D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAF550B32D7B720E009C46D5;
+			remoteInfo = "Priority-redo";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		6268F4862DA961360023F753 /* Priority-redoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Priority-redoTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6268F4932DA964B40023F753 /* Priority-redoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Priority-redoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8798AAE2DA345F9007C3E65 /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Auth0.plist; sourceTree = "<group>"; };
 		FAF550B42D7B720E009C46D5 /* Priority-redo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Priority-redo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		6268F4872DA961360023F753 /* Priority-redoTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Priority-redoTests";
+			sourceTree = "<group>";
+		};
 		FAF550B62D7B720E009C46D5 /* Priority-redo */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "Priority-redo";
@@ -25,6 +49,20 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6268F4832DA961360023F753 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6268F4902DA964B40023F753 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FAF550B12D7B720E009C46D5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -41,6 +79,7 @@
 			children = (
 				D8798AAE2DA345F9007C3E65 /* Auth0.plist */,
 				FAF550B62D7B720E009C46D5 /* Priority-redo */,
+				6268F4872DA961360023F753 /* Priority-redoTests */,
 				FAF550B52D7B720E009C46D5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -49,6 +88,8 @@
 			isa = PBXGroup;
 			children = (
 				FAF550B42D7B720E009C46D5 /* Priority-redo.app */,
+				6268F4862DA961360023F753 /* Priority-redoTests.xctest */,
+				6268F4932DA964B40023F753 /* Priority-redoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -56,6 +97,49 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		6268F4852DA961360023F753 /* Priority-redoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6268F48E2DA961360023F753 /* Build configuration list for PBXNativeTarget "Priority-redoTests" */;
+			buildPhases = (
+				6268F4822DA961360023F753 /* Sources */,
+				6268F4832DA961360023F753 /* Frameworks */,
+				6268F4842DA961360023F753 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6268F48B2DA961360023F753 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6268F4872DA961360023F753 /* Priority-redoTests */,
+			);
+			name = "Priority-redoTests";
+			packageProductDependencies = (
+			);
+			productName = "Priority-redoTests";
+			productReference = 6268F4862DA961360023F753 /* Priority-redoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		6268F4922DA964B40023F753 /* Priority-redoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6268F49B2DA964B40023F753 /* Build configuration list for PBXNativeTarget "Priority-redoUITests" */;
+			buildPhases = (
+				6268F48F2DA964B40023F753 /* Sources */,
+				6268F4902DA964B40023F753 /* Frameworks */,
+				6268F4912DA964B40023F753 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6268F49A2DA964B40023F753 /* PBXTargetDependency */,
+			);
+			name = "Priority-redoUITests";
+			packageProductDependencies = (
+			);
+			productName = "Priority-redoUITests";
+			productReference = 6268F4932DA964B40023F753 /* Priority-redoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		FAF550B32D7B720E009C46D5 /* Priority-redo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FAF550C22D7B7211009C46D5 /* Build configuration list for PBXNativeTarget "Priority-redo" */;
@@ -89,6 +173,14 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					6268F4852DA961360023F753 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = FAF550B32D7B720E009C46D5;
+					};
+					6268F4922DA964B40023F753 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = FAF550B32D7B720E009C46D5;
+					};
 					FAF550B32D7B720E009C46D5 = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -112,11 +204,27 @@
 			projectRoot = "";
 			targets = (
 				FAF550B32D7B720E009C46D5 /* Priority-redo */,
+				6268F4852DA961360023F753 /* Priority-redoTests */,
+				6268F4922DA964B40023F753 /* Priority-redoUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		6268F4842DA961360023F753 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6268F4912DA964B40023F753 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FAF550B22D7B720E009C46D5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -128,6 +236,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6268F4822DA961360023F753 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6268F48F2DA964B40023F753 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FAF550B02D7B720E009C46D5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -137,7 +259,86 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		6268F48B2DA961360023F753 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAF550B32D7B720E009C46D5 /* Priority-redo */;
+			targetProxy = 6268F48A2DA961360023F753 /* PBXContainerItemProxy */;
+		};
+		6268F49A2DA964B40023F753 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAF550B32D7B720E009C46D5 /* Priority-redo */;
+			targetProxy = 6268F4992DA964B40023F753 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		6268F48C2DA961360023F753 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Erin.Priority-redoTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Priority-redo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Priority-redo";
+			};
+			name = Debug;
+		};
+		6268F48D2DA961360023F753 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Erin.Priority-redoTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Priority-redo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Priority-redo";
+			};
+			name = Release;
+		};
+		6268F49C2DA964B40023F753 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Erin.Priority-redoUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Priority-redo";
+			};
+			name = Debug;
+		};
+		6268F49D2DA964B40023F753 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Erin.Priority-redoUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Priority-redo";
+			};
+			name = Release;
+		};
 		FAF550C02D7B7211009C46D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -320,6 +521,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6268F48E2DA961360023F753 /* Build configuration list for PBXNativeTarget "Priority-redoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6268F48C2DA961360023F753 /* Debug */,
+				6268F48D2DA961360023F753 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6268F49B2DA964B40023F753 /* Build configuration list for PBXNativeTarget "Priority-redoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6268F49C2DA964B40023F753 /* Debug */,
+				6268F49D2DA964B40023F753 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FAF550AF2D7B720E009C46D5 /* Build configuration list for PBXProject "Priority-redo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
