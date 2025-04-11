@@ -50,7 +50,6 @@ struct PriorityWidgetEntryView : View {
         VStack {
             ProgressRingView(progress: 0.75/*entry.progress*/)
                 .padding(8)
-            Text("Next Task")
         }
     }
 }
