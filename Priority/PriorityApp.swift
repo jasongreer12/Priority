@@ -1,6 +1,6 @@
 //
-//  Priority_redoApp.swift
-//  Priority-redo
+//  PriorityApp.swift
+//  Priority
 //
 //  Created by Alex on 3/7/25.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct Priority_redoApp: App {
+struct PriorityApp: App {
     @StateObject private var taskViewModel = TaskViewModel()
     
     var body: some Scene {
