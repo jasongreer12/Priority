@@ -36,10 +36,9 @@ struct PriorityWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        VStack {
-            ProgressRingView(progress: 0.75/*entry.progress*/)
-                .padding(8)
-        }
+        ProgressRingView(progress: entry.progress)
+            .containerBackground(.fill.quaternary, for: .widget)
+            .padding(8)
     }
 }
 
@@ -59,5 +58,5 @@ struct PriorityWidget: Widget {
 #Preview(as: .systemSmall) {
     PriorityWidget()
 } timeline: {
-    SimpleEntry(date: .now, progress: 0.8)
+    SimpleEntry(date: .now, progress: 0.6)
 }
