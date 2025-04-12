@@ -23,8 +23,8 @@ struct ContentView: View {
     
     var body: some View {
         Group {
-            //if false {
-            if user == nil {
+            if false {
+            //if user == nil {
                 // Show a simple login screen when user is not logged in.
                 VStack(spacing: 20) {
                     Text("Welcome to Priority!")
@@ -46,7 +46,7 @@ struct ContentView: View {
             } else {
                 // Main app interface when user is logged in.
                 ZStack {
-                    HomeView()
+                    HomeView(vm: .init(manager: .shared))
                         .edgesIgnoringSafeArea(.all)
                     
                     // Bottom menu overlay pinned to the bottom.

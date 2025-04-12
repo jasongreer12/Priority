@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
-    @EnvironmentObject var taskViewModel: TaskViewModel
+    //@EnvironmentObject var taskViewModel: EditTaskViewModel
+    @ObservedObject var vm: EditTaskViewModel
     
     @FetchRequest(fetchRequest: Task.all()) private var tasks
     
@@ -20,8 +21,8 @@ struct HomeView: View {
                 .padding(.top, 20)
             
             // Passing the computed progress value and forcing re-render with .id
-            ProgressRingView(progress: taskViewModel.completionPercentage)
-                .id(taskViewModel.completionPercentage)
+            ProgressRingView()
+                //.id(vm.completionPercentage)
                 .frame(width: UIScreen.main.bounds.height * 0.25,
                        height: UIScreen.main.bounds.height * 0.25)
                 .padding(.top, 10)
@@ -49,10 +50,11 @@ struct HomeView: View {
     }
 }
 
+
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
-            .environmentObject(TaskViewModel())
+        HomeView(vm: .init(manager: .shared))
+            //.environmentObject(TaskViewModel())
     }
 }
 

@@ -8,8 +8,20 @@
 import SwiftUI
 
 struct ProgressRingView: View {
-    var progress: Double  // Expected value between 0 and 1
+    //var progress: Double  // Expected value between 0 and 1
     @State private var animatedProgress: Double = 0
+    
+    @FetchRequest(fetchRequest: Task.all()) private var tasks
+    var completionPercentage: Double {
+        if tasks.isEmpty {
+            return 1.0
+        } else {
+            let completedCount = tasks.filter { $0.isComplete }.count
+            return Double(completedCount) / Double(tasks.count)
+        }
+    }
+    
+    //@FetchRequest(fetchRequest: Task.all()) private var tasks
     
     var body: some View {
         ZStack {
@@ -31,9 +43,9 @@ struct ProgressRingView: View {
                 .font(.system(size: 30, weight: .bold))
         }
         .onAppear {
-            animatedProgress = progress
+            animatedProgress = completionPercentage
         }
-        .onChange(of: progress) { newValue, _ in
+        .onChange(of: completionPercentage) { newValue, _ in
             withAnimation(.easeInOut(duration: 1)) {
                 animatedProgress = newValue
             }
@@ -53,7 +65,7 @@ struct ProgressRingView: View {
 
 struct ProgressRingView_Previews: PreviewProvider {
     static var previews: some View {
-        ProgressRingView(progress: 0.75)
+        ProgressRingView()
             .previewLayout(.sizeThatFits)
             .padding()
     }

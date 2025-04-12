@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import SwiftUI
 
 final class EditTaskViewModel: ObservableObject {
     @Published var task: Task
@@ -22,5 +23,6 @@ final class EditTaskViewModel: ObservableObject {
         if context.hasChanges {
             try context.save()
         }
+        try context.save()
     }
 }

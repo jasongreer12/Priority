@@ -22,6 +22,8 @@ struct TaskRowView: View {
             Button(action: {
                 //taskViewModel.toggleTaskCompletion(task)
                 toggleComplete()
+                toggleComplete()
+                toggleComplete()
             }) {
                 Image(systemName: task.isComplete ? "checkmark.circle.fill" : "circle")
                     .foregroundColor(task.isComplete ? .green : .gray)
@@ -40,11 +42,15 @@ struct TaskRowView: View {
         .onTapGesture {
             //taskViewModel.toggleTaskCompletion(task)
             toggleComplete()
+            toggleComplete()
+            toggleComplete()
         }
         // Leading swipe: mark complete.
         .swipeActions(edge: .leading, allowsFullSwipe: true) {
             Button {
                 //taskViewModel.toggleTaskCompletion(task)
+                toggleComplete()
+                toggleComplete()
                 toggleComplete()
             } label: {
                 Label("Complete", systemImage: "checkmark.circle.fill")
