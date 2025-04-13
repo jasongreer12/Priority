@@ -13,8 +13,10 @@ final class Task: NSManagedObject {
     @NSManaged var title: String
     @NSManaged var details: String
     @NSManaged var isComplete: Bool
-    @NSManaged var dueDate: Date
-    @NSManaged var estimatedTimeToComplete: Float
+    @NSManaged var dueDate: Date?
+    @NSManaged var estimatedTimeToComplete: NSNumber?
+    @NSManaged var sortIndex: Int32
+    @NSManaged var taskCategory: Category?
     
     override func awakeFromInsert() {
         super.awakeFromInsert()
@@ -31,8 +33,37 @@ extension Task {
     
     static func all() -> NSFetchRequest<Task> {
         let request: NSFetchRequest<Task> = tasksFetchRequest
-        //Modify Here to sort by priority. Can also sort by other variables too.
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Task.title, ascending: true)]
+        request.sortDescriptors = [
+            NSSortDescriptor(keyPath: \Task.sortIndex, ascending: true)
+        ]
         return request
+    }
+    
+    var priorityScore: Double {
+        let categoryWeight = Double(taskCategory?.priority ?? 5)
+        
+        // UI: needs to be in increments of 15
+        let completionTimeWeight: Double = {
+            guard let time = estimatedTimeToComplete?.doubleValue else { return 5 }
+            
+            let hours = time / 3600
+            return min(10, max(0, hours / 1.5))
+        }()
+        
+        let dueDateWeight: Double = {
+            guard let due = dueDate else { return 5 }
+            
+            let now = Date()
+            let secondsUntilDue = due.timeIntervalSince(now)
+            let hoursUntilDue = max(1, secondsUntilDue / 3600)
+            
+            if secondsUntilDue < 0 {
+                return 10 // overdue tasks
+            }
+            
+            return min(10, max(0, 10 - log(hoursUntilDue)))
+        }()
+        
+        return categoryWeight + completionTimeWeight + dueDateWeight
     }
 }

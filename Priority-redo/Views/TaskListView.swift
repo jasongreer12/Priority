@@ -9,42 +9,39 @@ import SwiftUI
 
 struct TaskListView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
-    
-    //May be better way to do this
-    @FetchRequest(fetchRequest: Task.all()) private var tasks
-    
+
     var body: some View {
-        /*List {
-            ForEach(taskViewModel.tasks) { task in
-                TaskRowView(task: task)
+        VStack {
+            Picker("Sort Mode", selection: $taskViewModel.sortMode) {
+                Text("Custom").tag(TaskSortMode.custom)
+                Text("Prioritized").tag(TaskSortMode.prioritized)
             }
-            .onDelete { indexSet in
-                indexSet.forEach { index in
-                    let task = taskViewModel.tasks[index]
-                    taskViewModel.deleteTask(task)
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
+
+            List {
+                ForEach(taskViewModel.displayedTasks, id: \.objectID) { task in
+                    TaskRowView(task: task)
                 }
+                .onMove(perform: taskViewModel.sortMode == .custom ? taskViewModel.reorderTasks : { _, _ in })
             }
+            .listStyle(PlainListStyle())
         }
-        .listStyle(PlainListStyle())*/
-        
-        List {
-            ForEach(tasks, id: \.objectID) { task in
-                TaskRowView(task: task)
-            }
-            /*.onDelete { indexSet in
-                indexSet.forEach { index in
-                    let task = taskViewModel.tasks[index]
-                    taskViewModel.deleteTask(task)
-                }
-            }*/
+        .onAppear {
+            taskViewModel.fetchTasks(context: TaskManager.shared.viewContext)
         }
-        .listStyle(PlainListStyle())
+        .onChange(of: taskViewModel.sortMode) {
+            taskViewModel.fetchTasks(context: TaskManager.shared.viewContext)
+        }
+        .toolbar {
+            EditButton()
+        }
     }
 }
 
-struct TaskListView_Previews: PreviewProvider {
-    static var previews: some View {
-        TaskListView()
-            .environmentObject(TaskViewModel())
-    }
-}
+//struct TaskListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TaskListView()
+//            .environmentObject(TaskViewModel())
+//    }
+//}

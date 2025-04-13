@@ -8,23 +8,14 @@
 import SwiftUI
 
 struct TaskRowView: View {
-    //@EnvironmentObject var taskViewModel: TaskViewModel
-    //var task: TaskModel
     @Environment(\.managedObjectContext) private var moc
-    
+    @EnvironmentObject var taskViewModel: TaskViewModel
     @ObservedObject var task: Task
+    @State private var isEditing = false
     
-    var taskManager = TaskManager.shared
-
     var body: some View {
         HStack {
-            // Tapping the icon or row toggles completion.
-            Button(action: {
-                //taskViewModel.toggleTaskCompletion(task)
-                toggleComplete()
-                toggleComplete()
-                toggleComplete()
-            }) {
+            Button(action: toggleComplete) {
                 Image(systemName: task.isComplete ? "checkmark.circle.fill" : "circle")
                     .foregroundColor(task.isComplete ? .green : .gray)
                     .font(.title)
@@ -38,70 +29,70 @@ struct TaskRowView: View {
             Spacer()
         }
         .padding(.vertical, 8)
-        .contentShape(Rectangle()) // Makes the entire row tappable.
+        .contentShape(Rectangle())
         .onTapGesture {
-            //taskViewModel.toggleTaskCompletion(task)
-            toggleComplete()
-            toggleComplete()
             toggleComplete()
         }
-        // Leading swipe: mark complete.
         .swipeActions(edge: .leading, allowsFullSwipe: true) {
-            Button {
-                //taskViewModel.toggleTaskCompletion(task)
-                toggleComplete()
-                toggleComplete()
-                toggleComplete()
-            } label: {
+            Button(action: toggleComplete) {
                 Label("Complete", systemImage: "checkmark.circle.fill")
             }
             .tint(.green)
         }
-        // Trailing swipe: delete task.
-        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+            Button {
+                isEditing = true
+            } label: {
+                Label("Edit", systemImage: "pencil")
+            }
+            .tint(.blue)
+            
             Button(role: .destructive) {
-                //taskViewModel.deleteTask(task)
-                do{
-                    try delete(task)
-                } catch {
-                    print (error)
-                }
+                delete()
             } label: {
                 Label("Delete", systemImage: "trash.fill")
             }
         }
+        .sheet(isPresented: $isEditing) {
+            AddTaskView(existingTask: task)
+                .environment(\.managedObjectContext, moc)
+                .environmentObject(taskViewModel)
+        }
     }
-}
-
-private extension TaskRowView {
-    func toggleComplete() {
+    
+    private func toggleComplete() {
         task.isComplete.toggle()
-        do{
+        save()
+        taskViewModel.fetchTasks(context: moc)
+    }
+    
+    private func delete() {
+        moc.delete(task)
+        save()
+        taskViewModel.fetchTasks(context: moc)
+    }
+    
+    private func save() {
+        do {
             if moc.hasChanges {
                 try moc.save()
             }
         } catch {
-            print(error)
-        }
-    }
-    
-    func delete(_ task: Task) throws {
-        let context = taskManager.viewContext
-        let existigTask = try context.existingObject(with: task.objectID)
-        context.delete(existigTask)
-        
-        if moc.hasChanges {
-            try moc.save()
+            print("Failed to save task: \(error.localizedDescription)")
         }
     }
 }
 
-/*struct TaskRowView_Previews: PreviewProvider {
+struct TaskRowView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskRowView(task: Task())
-            .environmentObject(TaskViewModel())
+        let context = TaskManager.shared.viewContext
+        let task = Task(context: context)
+        task.title = "Task Title"
+        task.isComplete = false
+
+        return TaskRowView(task: task)
+            .environment(\.managedObjectContext, context)
             .previewLayout(.sizeThatFits)
             .padding()
     }
 }
-*/

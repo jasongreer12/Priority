@@ -8,11 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
-    //@EnvironmentObject var taskViewModel: EditTaskViewModel
-    @ObservedObject var vm: EditTaskViewModel
-    
-    @FetchRequest(fetchRequest: Task.all()) private var tasks
-    
+    @EnvironmentObject var taskViewModel: TaskViewModel
+
     var body: some View {
         VStack(spacing: 20) {
             Text("Priority")
@@ -20,24 +17,12 @@ struct HomeView: View {
                 .fontWeight(.bold)
                 .padding(.top, 20)
             
-            // Passing the computed progress value and forcing re-render with .id
-            ProgressRingView()
-                //.id(vm.completionPercentage)
+            ProgressRingView(progress: taskViewModel.completionPercentage)
                 .frame(width: UIScreen.main.bounds.height * 0.25,
                        height: UIScreen.main.bounds.height * 0.25)
                 .padding(.top, 10)
-            
-            Spacer()
-            
-            /*if !taskViewModel.tasks.isEmpty {
-                TaskListView()
-                    .frame(width: UIScreen.main.bounds.width - 40,
-                           height: UIScreen.main.bounds.width - 40)
-                    .cornerRadius(16)
-                    .padding(.top, 36)
-                    .padding(.horizontal, 20)
-            }*/
-            if !tasks.isEmpty {
+                        
+            if !taskViewModel.tasks.isEmpty {
                 TaskListView()
                     .frame(width: UIScreen.main.bounds.width - 40,
                            height: UIScreen.main.bounds.width - 40)
@@ -47,24 +32,19 @@ struct HomeView: View {
             }
         }
         .padding(.bottom, 21)
-    }
-}
-
-
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView(vm: .init(manager: .shared))
-            //.environmentObject(TaskViewModel())
+        .onAppear {
+            taskViewModel.fetchTasks(context: TaskManager.shared.viewContext)
+        }
     }
 }
 
 struct ProfileHeader: View {
     @State var picture: String
-
+    
     private let size: CGFloat = 100
-
+    
     var body: some View {
-    #if os(iOS)
+#if os(iOS)
         AsyncImage(url: URL(string: picture), content: { image in
             image.resizable()
         }, placeholder: {
@@ -73,18 +53,18 @@ struct ProfileHeader: View {
         .frame(width: self.size, height: self.size)
         .clipShape(Circle())
         .padding(.bottom, 24)
-    #else
+#else
         Text("Profile")
-    #endif
+#endif
     }
 }
 
 struct ProfileCell: View {
     @State var key: String
     @State var value: String
-
+    
     private let size: CGFloat = 14
-
+    
     var body: some View {
         HStack {
             Text(key)
@@ -92,12 +72,19 @@ struct ProfileCell: View {
             Spacer()
             Text(value)
                 .font(.system(size: self.size, weight: .regular))
-            #if os(iOS)
+#if os(iOS)
                 .foregroundColor(Color("Grey"))
-            #endif
+#endif
         }
-    #if os(iOS)
+#if os(iOS)
         .listRowBackground(Color.white)
-    #endif
+#endif
     }
 }
+
+//struct HomeView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        HomeView()
+//            .environmentObject(TaskViewModel())
+//    }
+//}

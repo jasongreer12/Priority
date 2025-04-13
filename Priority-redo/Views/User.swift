@@ -5,7 +5,6 @@
 //  Created by Jason Greer on 4/6/25.
 //
 
-
 import JWTDecode
 
 struct User {
@@ -28,6 +27,7 @@ extension User {
               let updatedAt = jwt["updated_at"].string else {
             return nil
         }
+        
         self.id = id
         self.name = name
         self.email = email

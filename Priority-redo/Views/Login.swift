@@ -19,7 +19,7 @@ struct MainView: View {
             }
         } else {
             VStack {
-                HomeView(vm: .init(manager: .shared))
+                HomeView()
                 Button("Login", action: self.login)
             }
         }
