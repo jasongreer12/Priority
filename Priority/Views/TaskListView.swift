@@ -9,26 +9,39 @@ import SwiftUI
 
 struct TaskListView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
-    
+
     var body: some View {
-        List {
-            ForEach(taskViewModel.tasks) { task in
-                TaskRowView(task: task)
+        VStack {
+            Picker("Sort Mode", selection: $taskViewModel.sortMode) {
+                Text("Custom").tag(TaskSortMode.custom)
+                Text("Prioritized").tag(TaskSortMode.prioritized)
             }
-            .onDelete { indexSet in
-                indexSet.forEach { index in
-                    let task = taskViewModel.tasks[index]
-                    taskViewModel.deleteTask(task)
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
+
+            List {
+                ForEach(taskViewModel.displayedTasks, id: \.objectID) { task in
+                    TaskRowView(task: task)
                 }
+                .onMove(perform: taskViewModel.sortMode == .custom ? taskViewModel.reorderTasks : { _, _ in })
             }
+            .listStyle(PlainListStyle())
         }
-        .listStyle(PlainListStyle())
+        .onAppear {
+            taskViewModel.fetchTasks(context: TaskManager.shared.viewContext)
+        }
+        .onChange(of: taskViewModel.sortMode) {
+            taskViewModel.fetchTasks(context: TaskManager.shared.viewContext)
+        }
+        .toolbar {
+            EditButton()
+        }
     }
 }
 
-struct TaskListView_Previews: PreviewProvider {
-    static var previews: some View {
-        TaskListView()
-            .environmentObject(TaskViewModel())
-    }
-}
+//struct TaskListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TaskListView()
+//            .environmentObject(TaskViewModel())
+//    }
+//}
