@@ -103,4 +103,14 @@ class TaskViewModel: ObservableObject {
         tasks[index].title = title
         tasks[index].details = details
     }
+    
+    func save(context: NSManagedObjectContext) {
+        do {
+            if context.hasChanges {
+                try context.save()
+            }
+        } catch {
+            print("Failed to save context: \(error.localizedDescription)")
+        }
+    }
 }
