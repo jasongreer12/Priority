@@ -1,3 +1,9 @@
-.DS_Store
+# Xcode user data
 *.xcuserstate
-*.xccheckout
+*.xcuserdatad
+*.xcscmblueprint
+*.xcworkspace/xcuserdata/
+**/xcuserdata/
+
+# Other uneeded files
+.DS_Store
