@@ -43,7 +43,7 @@
 		FA7FBE8C2DA8B8BF002EF557 /* PriorityWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PriorityWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA7FBE8E2DA8B8BF002EF557 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		FA7FBE902DA8B8BF002EF557 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		FAF550B42D7B720E009C46D5 /* Priority-redo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Priority-redo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAF550B42D7B720E009C46D5 /* Priority.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Priority.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -65,7 +65,7 @@
 			path = PriorityWidget;
 			sourceTree = "<group>";
 		};
-		FAF550B62D7B720E009C46D5 /* Priority-redo */ = {
+		FAF550B62D7B720E009C46D5 /* Priority */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Priority;
 			sourceTree = "<group>";
@@ -106,7 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				D8798AAE2DA345F9007C3E65 /* Auth0.plist */,
-				FAF550B62D7B720E009C46D5 /* Priority-redo */,
+				FAF550B62D7B720E009C46D5 /* Priority-redo THIS MIGHT BE A PROBLEM!!!!!!!!!!!!!!!!!!*/,
 				FA7FBE922DA8B8C0002EF557 /* PriorityWidget */,
 				FA7FBE8D2DA8B8BF002EF557 /* Frameworks */,
 				FAF550B52D7B720E009C46D5 /* Products */,
@@ -116,7 +116,7 @@
 		FAF550B52D7B720E009C46D5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FAF550B42D7B720E009C46D5 /* Priority-redo.app */,
+				FAF550B42D7B720E009C46D5 /* Priority-redo.app THIS MIGHT BE A PROBLEM!!!!!!!!!!!!!!!!!!*/,
 				FA7FBE8C2DA8B8BF002EF557 /* PriorityWidgetExtension.appex */,
 			);
 			name = Products;
@@ -147,7 +147,7 @@
 			productReference = FA7FBE8C2DA8B8BF002EF557 /* PriorityWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		FAF550B32D7B720E009C46D5 /* Priority-redo */ = {
+		FAF550B32D7B720E009C46D5 /* Priority-redo THIS MIGHT BE A PROBLEM!!!!!!!!!!!!!!!!!!*/ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FAF550C22D7B7211009C46D5 /* Build configuration list for PBXNativeTarget "Priority" */;
 			buildPhases = (
@@ -207,7 +207,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FAF550B32D7B720E009C46D5 /* Priority-redo */,
+				FAF550B32D7B720E009C46D5 /* Priority-redo THIS MIGHT BE A PROBLEM!!!!!!!!!!!!!!!!!!*/,
 				FA7FBE8B2DA8B8BF002EF557 /* PriorityWidgetExtension */,
 			);
 		};
@@ -275,7 +275,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Alexander-Seda.Priority-redo.PriorityWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = "Alexander-Seda.Priority.PriorityWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -302,7 +302,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Alexander-Seda.Priority-redo.PriorityWidget";
+				PRODUCT_BUNDLE_IDENTIFIER = "Alexander-Seda.Priority.PriorityWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -504,7 +504,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FAF550AF2D7B720E009C46D5 /* Build configuration list for PBXProject "Priority-redo" */ = {
+		FAF550AF2D7B720E009C46D5 /* Build configuration list for PBXProject "Priority-redo" THIS COULD BE A PROBLEM!!!!!!!!!!!!!!!!!!!!!!*/ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FAF550C02D7B7211009C46D5 /* Debug */,
