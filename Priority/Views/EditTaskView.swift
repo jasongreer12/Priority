@@ -11,12 +11,12 @@ struct EditTaskView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var taskViewModel: TaskViewModel
     
-    let task: TaskModel
+    @ObservedObject var task: Task
     
     @State private var title: String
     @State private var details: String
     
-    init(task: TaskModel) {
+    init(task: Task) {
         self.task = task
         _title = State(initialValue: task.title)
         _details = State(initialValue: task.details)
