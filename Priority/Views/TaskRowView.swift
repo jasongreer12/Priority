@@ -68,7 +68,8 @@ struct TaskRowView: View {
     private func toggleComplete() {
         task.isComplete.toggle()
         save()
-        taskViewModel.fetchTasks(context: moc)
+//        taskViewModel.fetchTasks(context: moc)
+        taskViewModel.sortTasks()
     }
     
     private func delete() {
@@ -88,16 +89,16 @@ struct TaskRowView: View {
     }
 }
 
-struct TaskRowView_Previews: PreviewProvider {
-    static var previews: some View {
-        let context = TaskManager.shared.viewContext
-        let task = Task(context: context)
-        task.title = "Task Title"
-        task.isComplete = false
-        
-        return TaskRowView(task: task)
-            .environment(\.managedObjectContext, context)
-            .previewLayout(.sizeThatFits)
-            .padding()
-    }
-}
+//struct TaskRowView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let context = TaskManager.shared.viewContext
+//        let task = Task(context: context)
+//        task.title = "Task Title"
+//        task.isComplete = false
+//        
+//        return TaskRowView(task: task)
+//            .environment(\.managedObjectContext, context)
+//            .previewLayout(.sizeThatFits)
+//            .padding()
+//    }
+//}

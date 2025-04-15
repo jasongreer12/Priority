@@ -9,27 +9,40 @@ import Foundation
 import SwiftUI
 import CoreData
 
-enum TaskSortMode {
+enum TaskSortMode: String {
     case custom
     case prioritized
 }
 
 class TaskViewModel: ObservableObject {
-    @Published var tasks: [Task] = []
-    @Published var sortMode: TaskSortMode = .custom
-    
-    var displayedTasks: [Task] {
-        switch sortMode {
-        case .custom:
-            return tasks
-        case .prioritized:
-            return tasks.sorted { $0.priorityScore > $1.priorityScore }
+    @Published private(set) var tasks: [Task] = []
+    @Published var sortMode: TaskSortMode = TaskSortMode.loadFromDefaults() {
+        didSet {
+            sortMode.saveToDefaults()
         }
     }
     
-    // Compute progress as the fraction of tasks completed.
-    // - If no tasks exist, return 1.0 (fully filled ring).
-    // - Otherwise, progress is (# completed tasks / total tasks).
+    init() {
+        print(" TaskViewModel INIT")
+        sortMode = TaskSortMode.loadFromDefaults()
+        fetchTasks(context: TaskManager.shared.viewContext)
+        sortTasks()
+    }
+    
+    var displayedTasks: [Task] {
+        let sorted: [Task]
+        switch sortMode {
+        case .custom:
+            sorted = tasks.sorted { $0.sortIndex < $1.sortIndex }
+        case .prioritized:
+            sorted = tasks.sorted { $0.priorityScore > $1.priorityScore }
+        }
+        
+        let incomplete = sorted.filter { !$0.isComplete }
+        let complete = sorted.filter { $0.isComplete }
+        return incomplete + complete
+    }
+    
     var completionPercentage: Double {
         let total = tasks.count
         let completed = tasks.filter { $0.isComplete }.count
@@ -40,6 +53,10 @@ class TaskViewModel: ObservableObject {
         let request = Task.all()
         do {
             tasks = try context.fetch(request)
+            print("Fetched \(tasks.count) tasks with sortMode \(sortMode)")
+            for (i, t) in tasks.enumerated() {
+                print("\(i): \(t.title) — sortIndex \(t.sortIndex) - priorityScore \(t.priorityScore)")
+            }
         } catch {
             print("Failed to fetch tasks: \(error)")
         }
@@ -89,11 +106,6 @@ class TaskViewModel: ObservableObject {
         }
     }
     
-    func toggleTaskCompletion(_ task: Task) {
-        guard let index = tasks.firstIndex(where: { $0.id == task.id }) else { return }
-        tasks[index].isComplete.toggle()
-    }
-    
     func deleteTask(_ task: Task) {
         tasks.removeAll { $0.id == task.id }
     }
@@ -105,8 +117,32 @@ class TaskViewModel: ObservableObject {
     }
     
     func sortTasks() {
-        if sortMode == .prioritized {
+        print("Sorting tasks with mode: \(sortMode)")
+        
+        switch sortMode {
+        case .custom:
+            fetchTasks(context: TaskManager.shared.viewContext)
+        case .prioritized:
             tasks = tasks.sorted { $0.priorityScore > $1.priorityScore }
+            for (i, t) in tasks.enumerated() {
+                print("\(i): \(t.title) — priorityScore: \(t.priorityScore)")
+            }
         }
+    }
+}
+
+extension TaskSortMode {
+    private static let key = "selectedSortMode"
+    
+    static func loadFromDefaults() -> TaskSortMode {
+        if let rawValue = UserDefaults.standard.string(forKey: key),
+           let mode = TaskSortMode(rawValue: rawValue) {
+            return mode
+        }
+        return .prioritized
+    }
+    
+    func saveToDefaults() {
+        UserDefaults.standard.set(self.rawValue, forKey: Self.key)
     }
 }

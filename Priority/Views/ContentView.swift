@@ -104,15 +104,11 @@ struct ContentView: View {
                         ProfileView(user: user, logout: self.logout)
                     }
                 }
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                    taskViewModel.sortTasks()
+                }
             }
         }
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-            .environmentObject(TaskViewModel())
     }
 }
 
@@ -157,5 +153,14 @@ extension ContentView {
                     print("Logout failed with: \(error)")
                 }
             }
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static let previewModel = TaskViewModel()
+    
+    static var previews: some View {
+        ContentView()
+            .environmentObject(previewModel)
     }
 }
