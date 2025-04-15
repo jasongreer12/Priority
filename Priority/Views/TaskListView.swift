@@ -12,13 +12,6 @@ struct TaskListView: View {
     
     var body: some View {
         VStack {
-            Picker("Sort Mode", selection: $taskViewModel.sortMode) {
-                Text("Custom").tag(TaskSortMode.custom)
-                Text("Prioritized").tag(TaskSortMode.prioritized)
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding()
-            
             if taskViewModel.displayedTasks.isEmpty {
                 Text("No tasks yet!")
                     .foregroundColor(.secondary)
@@ -36,6 +29,7 @@ struct TaskListView: View {
             taskViewModel.fetchTasks(context: TaskManager.shared.viewContext)
         }
         .onChange(of: taskViewModel.sortMode) {
+            taskViewModel.sortTasks()
             taskViewModel.fetchTasks(context: TaskManager.shared.viewContext)
         }
         .toolbar {

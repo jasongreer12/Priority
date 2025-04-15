@@ -40,18 +40,18 @@ extension Task {
     }
     
     var priorityScore: Double {
-        let categoryWeight = Double(taskCategory?.priority ?? 5)
+        let categoryWeight = Double(taskCategory?.priority ?? 0)
         
         // UI: needs to be in increments of 15
         let completionTimeWeight: Double = {
-            guard let time = estimatedTimeToComplete?.doubleValue else { return 5 }
+            guard let time = estimatedTimeToComplete?.doubleValue else { return 0 }
             
             let hours = time / 3600
             return min(10, max(0, hours / 1.5))
         }()
         
         let dueDateWeight: Double = {
-            guard let due = dueDate else { return 5 }
+            guard let due = dueDate else { return 0 }
             
             let now = Date()
             let secondsUntilDue = due.timeIntervalSince(now)

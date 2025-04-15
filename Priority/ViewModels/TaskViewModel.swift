@@ -103,4 +103,10 @@ class TaskViewModel: ObservableObject {
         tasks[index].title = title
         tasks[index].details = details
     }
+    
+    func sortTasks() {
+        if sortMode == .prioritized {
+            tasks = tasks.sorted { $0.priorityScore > $1.priorityScore }
+        }
+    }
 }

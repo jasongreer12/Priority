@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SideMenuRightView: View {
+    @EnvironmentObject var taskViewModel: TaskViewModel
     @State private var showOptionsSheet = false
     @Binding var isSideMenuOpen: Bool
     
@@ -26,12 +27,23 @@ struct SideMenuRightView: View {
                 Divider()
                     .padding(.vertical, 1)
                 
-                Button("Option 1") {
+                Button(action: {
+                    taskViewModel.sortMode = .custom
+                    taskViewModel.sortTasks()
                     isSideMenuOpen = false
+                }) {
+                    Label("Sort by Custom Order", systemImage: "line.3.horizontal")
                 }
                 .padding()
-                .frame(maxWidth: .infinity)
-                .multilineTextAlignment(.center)
+                
+                Button(action: {
+                    taskViewModel.sortMode = .prioritized
+                    taskViewModel.sortTasks()
+                    isSideMenuOpen = false
+                }) {
+                    Label("Sort PRIORITIZED", systemImage: "line.3.horizontal")
+                }
+                .padding()
                 
                 Divider()
                     .padding(.vertical, 1)
@@ -39,7 +51,7 @@ struct SideMenuRightView: View {
                 Button(action: {
                     showOptionsSheet = true
                 }) {
-                    Label("Options", systemImage: "gearshape")
+                    Label("More Options", systemImage: "gearshape")
                 }
                 .sheet(isPresented: $showOptionsSheet) {
                     OptionsView()
@@ -48,26 +60,21 @@ struct SideMenuRightView: View {
                 .frame(maxWidth: .infinity)
                 .multilineTextAlignment(.center)
                 
-                Divider()
-                    .padding(.vertical, 1)
-                
                 Spacer()
-                
-                Divider()
-                    .padding(.vertical, 1)
-                
-                Divider()
-                    .padding(.vertical, 1)
-            
-                .foregroundColor(.red)
-                .padding(.bottom, 50)
-                .padding(.top, 20)
-                .frame(maxWidth: .infinity)
-                .multilineTextAlignment(.center)
+                    .foregroundColor(.red)
+                    .padding(.bottom, 50)
+                    .padding(.top, 20)
+                    .frame(maxWidth: .infinity)
+                    .multilineTextAlignment(.center)
             }
             .frame(width: 250)
             .background(Color(UIColor.systemBackground))
             .edgesIgnoringSafeArea(.all)
         }
     }
+}
+
+#Preview {
+    SideMenuRightView(isSideMenuOpen: .constant(true))
+        .environmentObject(TaskViewModel())
 }
