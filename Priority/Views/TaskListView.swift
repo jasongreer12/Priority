@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TaskListView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
-
+    
     var body: some View {
         VStack {
             Picker("Sort Mode", selection: $taskViewModel.sortMode) {
@@ -18,7 +18,7 @@ struct TaskListView: View {
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding()
-
+            
             List {
                 ForEach(taskViewModel.displayedTasks, id: \.objectID) { task in
                     TaskRowView(task: task)
