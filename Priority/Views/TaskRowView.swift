@@ -27,6 +27,11 @@ struct TaskRowView: View {
                 .strikethrough(task.isComplete, color: .gray)
             
             Spacer()
+            
+            // DEVELOPMENT ONLY
+            Text("\(task.priorityScore, specifier: "%.1f")")
+                .font(.caption)
+                .foregroundColor(.secondary)
         }
         .padding(.vertical, 8)
         .contentShape(Rectangle())
@@ -89,7 +94,7 @@ struct TaskRowView_Previews: PreviewProvider {
         let task = Task(context: context)
         task.title = "Task Title"
         task.isComplete = false
-
+        
         return TaskRowView(task: task)
             .environment(\.managedObjectContext, context)
             .previewLayout(.sizeThatFits)

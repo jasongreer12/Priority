@@ -68,7 +68,7 @@ struct ContentView: View {
                         }
                         .frame(width: UIScreen.main.bounds.width - 20, height: 65)
                         .background(Color(UIColor.systemBackground).clipShape(RoundedRectangle(cornerRadius: 16)).shadow(color: .gray.opacity(0.4), radius: 4, x: 0, y: -2))
-                        .padding(.bottom, 30)
+                        .padding(.bottom, 0)
                         .zIndex(1)
                     }
                     

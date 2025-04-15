@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var taskViewModel: TaskViewModel
-
+    
     var body: some View {
         VStack(spacing: 20) {
             Text("Priority")
@@ -21,15 +21,14 @@ struct HomeView: View {
                 .frame(width: UIScreen.main.bounds.height * 0.25,
                        height: UIScreen.main.bounds.height * 0.25)
                 .padding(.top, 10)
-                        
-            if !taskViewModel.tasks.isEmpty {
-                TaskListView()
-                    .frame(width: UIScreen.main.bounds.width - 40,
-                           height: UIScreen.main.bounds.width - 40)
-                    .cornerRadius(16)
-                    .padding(.top, 36)
-                    .padding(.horizontal, 20)
-            }
+            
+            TaskListView()
+                .frame(width: UIScreen.main.bounds.width - 40,
+                       height: UIScreen.main.bounds.width - 40)
+                .cornerRadius(16)
+                .padding(.top, 36)
+                .padding(.horizontal, 20)
+            
         }
         .padding(.bottom, 21)
         .onAppear {
