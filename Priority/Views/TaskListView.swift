@@ -19,14 +19,19 @@ struct TaskListView: View {
             .pickerStyle(SegmentedPickerStyle())
             .padding()
             
-            List {
-                ForEach(taskViewModel.displayedTasks, id: \.objectID) { task in
-                    TaskRowView(task: task)
+            if taskViewModel.displayedTasks.isEmpty {
+                Text("No tasks yet!")
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                List {
+                    ForEach(taskViewModel.displayedTasks, id: \.objectID) { task in
+                        TaskRowView(task: task)
+                    }
+                    .onMove(perform: taskViewModel.sortMode == .custom ? taskViewModel.reorderTasks : { _, _ in })
                 }
-                .onMove(perform: taskViewModel.sortMode == .custom ? taskViewModel.reorderTasks : { _, _ in })
-            }
-            .listStyle(PlainListStyle())
-        }
+                .listStyle(PlainListStyle())
+            }}
         .onAppear {
             taskViewModel.fetchTasks(context: TaskManager.shared.viewContext)
         }
@@ -39,9 +44,9 @@ struct TaskListView: View {
     }
 }
 
-//struct TaskListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TaskListView()
-//            .environmentObject(TaskViewModel())
-//    }
-//}
+struct TaskListView_Previews: PreviewProvider {
+    static var previews: some View {
+        TaskListView()
+            .environmentObject(TaskViewModel())
+    }
+}
