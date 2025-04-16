@@ -13,7 +13,8 @@ struct AddTaskView: View {
     
     @State private var title: String = ""
     @State private var details: String = ""
-    
+    @State private var dueDate: Date = Date() // New state property for due date
+
     var body: some View {
         Form {
             Section(header: Text("Task Info")) {
@@ -21,9 +22,19 @@ struct AddTaskView: View {
                 TextField("Details", text: $details)
             }
             
+            Section(header: Text("Due Date")) {
+                DatePicker("Select due date", selection: $dueDate, displayedComponents: [.date])
+                    .datePickerStyle(GraphicalDatePickerStyle())
+            }
+            
             Button(action: {
-                // Add new task
-                taskViewModel.addTask(title: title, details: details)
+                // Create a new task with the selected due date.
+                let newTask = TaskModel(title: title,
+                                        details: details,
+                                        isCompleted: false,
+                                        dueDate: dueDate)
+                                    
+                taskViewModel.addTask(title: title, dueDate: dueDate)
                 presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Save")
@@ -32,7 +43,12 @@ struct AddTaskView: View {
             .disabled(title.isEmpty)
         }
         .navigationTitle("Add Task")
-        // No special code needed here for 3/4 coverage
-        // The .sheet call in ContentView controls the height.
+    }
+}
+
+struct AddTaskView_Previews: PreviewProvider {
+    static var previews: some View {
+        AddTaskView()
+            .environmentObject(TaskViewModel())
     }
 }

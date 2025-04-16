@@ -23,8 +23,8 @@ class TaskViewModel: ObservableObject {
         }
     }
     
-    func addTask(title: String, details: String = "") {
-        let newTask = TaskModel(title: title, details: details)
+    func addTask(title: String, details: String = "", dueDate: Date) {
+        let newTask = TaskModel(title: title, details: details, dueDate: dueDate)
         tasks.append(newTask)
     }
     

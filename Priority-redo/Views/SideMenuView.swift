@@ -25,7 +25,7 @@ struct SideMenuView: View {
                 Divider()
                     .padding(.vertical, 1)
                 
-                Button("Calender") {
+                Button("Calendar") {
                     isSideMenuOpen = false
                     onCalendarTap?()   // Activate the Calendar action
                 }
