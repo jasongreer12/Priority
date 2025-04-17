@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SideMenuView: View {
+struct SideMenuLeftView: View {
     @Binding var isSideMenuOpen: Bool
     var onProfileTap: (() -> Void)?
     var onCalendarTap: (() -> Void)?
@@ -26,7 +26,7 @@ struct SideMenuView: View {
                 Divider()
                     .padding(.vertical, 1)
                 
-                Button("Calender") {
+                Button("Calendar") {
                     isSideMenuOpen = false
                     onCalendarTap?()
                 }
@@ -57,13 +57,5 @@ struct SideMenuView: View {
             
             Spacer()
         }
-    }
-}
-
-struct SideMenuView_Previews: PreviewProvider {
-    static var previews: some View {
-        SideMenuView(isSideMenuOpen: .constant(true),
-                     onProfileTap: { print("Profile tapped") },
-                     onCalendarTap: { print("Calendar tapped") })
     }
 }

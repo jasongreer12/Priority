@@ -39,23 +39,3 @@ struct TasksForDayView: View {
         }
     }
 }
-
-struct TasksForDayView_Previews: PreviewProvider {
-    static var previews: some View {
-        let mockTaskViewModel = TaskViewModel()
-        let context = TaskManager.shared.viewContext
-
-        let sampleTask1 = Task(context: context)
-        sampleTask1.title = "Sample Task 1"
-        sampleTask1.dueDate = Date()
-        sampleTask1.isComplete = false
-
-        let sampleTask2 = Task(context: context)
-        sampleTask2.title = "Sample Task 2"
-        sampleTask2.dueDate = Date()
-        sampleTask2.isComplete = true
-
-        return TasksForDayView(date: Date(), tasks: [sampleTask1, sampleTask2])
-            .environmentObject(mockTaskViewModel)
-    }
-}

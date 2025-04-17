@@ -77,7 +77,7 @@ struct ContentView: View {
                         Color.black.opacity(0.3)
                             .ignoresSafeArea()
                             .onTapGesture { withAnimation { isLeftSideMenuOpen = false } }
-                        SideMenuView(isSideMenuOpen: $isLeftSideMenuOpen,
+                        SideMenuLeftView(isSideMenuOpen: $isLeftSideMenuOpen,
                                      onProfileTap: {
                             print("Profile tapped")
                             isProfileMenuOpen = true
