@@ -129,6 +129,17 @@ class TaskViewModel: ObservableObject {
             }
         }
     }
+    
+    private var groupedTasks: [Date: [Task]] {
+          let calendar = Calendar.current
+          return Dictionary(grouping: tasks) { task in
+              calendar.startOfDay(for: task.dueDate ?? Date())
+          }
+      }
+
+      private var sortedDates: [Date] {
+          groupedTasks.keys.sorted()
+      }
 }
 
 extension TaskSortMode {

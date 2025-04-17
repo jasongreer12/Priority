@@ -10,6 +10,7 @@ import SwiftUI
 struct SideMenuView: View {
     @Binding var isSideMenuOpen: Bool
     var onProfileTap: (() -> Void)?
+    var onCalendarTap: (() -> Void)?
     
     var body: some View {
         HStack(spacing: 0) {
@@ -27,6 +28,7 @@ struct SideMenuView: View {
                 
                 Button("Calender") {
                     isSideMenuOpen = false
+                    onCalendarTap?()
                 }
                 .padding()
                 .frame(maxWidth: .infinity)
@@ -55,5 +57,13 @@ struct SideMenuView: View {
             
             Spacer()
         }
+    }
+}
+
+struct SideMenuView_Previews: PreviewProvider {
+    static var previews: some View {
+        SideMenuView(isSideMenuOpen: .constant(true),
+                     onProfileTap: { print("Profile tapped") },
+                     onCalendarTap: { print("Calendar tapped") })
     }
 }

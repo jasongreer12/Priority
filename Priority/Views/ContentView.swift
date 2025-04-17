@@ -14,6 +14,7 @@ struct ContentView: View {
     @State private var isRightSideMenuOpen = false
     @State private var showAddTaskSheet = false
     @State private var isProfileMenuOpen = false
+    @State private var showCalendarSheet = false
     @State var user: User?
     
     var body: some View {
@@ -76,8 +77,13 @@ struct ContentView: View {
                         Color.black.opacity(0.3)
                             .ignoresSafeArea()
                             .onTapGesture { withAnimation { isLeftSideMenuOpen = false } }
-                        SideMenuView(isSideMenuOpen: $isLeftSideMenuOpen, onProfileTap: {
+                        SideMenuView(isSideMenuOpen: $isLeftSideMenuOpen,
+                                     onProfileTap: {
+                            print("Profile tapped")
                             isProfileMenuOpen = true
+                        },
+                                     onCalendarTap: {
+                            showCalendarSheet = true
                         })
                         .transition(.move(edge: .leading))
                         .zIndex(2)
@@ -105,7 +111,9 @@ struct ContentView: View {
                     }
                 }
                 .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-                    taskViewModel.sortTasks()
+                    taskViewModel.sortTasks()}
+                .sheet(isPresented: $showCalendarSheet) {
+                    CalendarView()
                 }
             }
         }
