@@ -77,7 +77,7 @@ struct ContentView: View {
                         Color.black.opacity(0.3)
                             .ignoresSafeArea()
                             .onTapGesture { withAnimation { isLeftSideMenuOpen = false } }
-                        SideMenuView(isSideMenuOpen: $isLeftSideMenuOpen,
+                        SideMenuLeftView(isSideMenuOpen: $isLeftSideMenuOpen,
                                      onProfileTap: {
                             print("Profile tapped")
                             isProfileMenuOpen = true
@@ -110,18 +110,13 @@ struct ContentView: View {
                         ProfileView(user: user, logout: self.logout)
                     }
                 }
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                    taskViewModel.sortTasks()}
                 .sheet(isPresented: $showCalendarSheet) {
                     CalendarView()
                 }
             }
         }
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-            .environmentObject(TaskViewModel())
     }
 }
 
@@ -166,5 +161,14 @@ extension ContentView {
                     print("Logout failed with: \(error)")
                 }
             }
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static let previewModel = TaskViewModel()
+    
+    static var previews: some View {
+        ContentView()
+            .environmentObject(previewModel)
     }
 }

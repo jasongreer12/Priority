@@ -31,9 +31,6 @@ struct HomeView: View {
             
         }
         .padding(.bottom, 21)
-        .onAppear {
-            taskViewModel.fetchTasks(context: TaskManager.shared.viewContext)
-        }
     }
 }
 
@@ -80,10 +77,3 @@ struct ProfileCell: View {
 #endif
     }
 }
-
-//struct HomeView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        HomeView()
-//            .environmentObject(TaskViewModel())
-//    }
-//}

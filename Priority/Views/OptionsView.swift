@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OptionsView: View {
     @Environment(\.dismiss) var dismiss
-
+    
     var body: some View {
         NavigationView {
             Form {
@@ -30,8 +30,8 @@ struct OptionsView: View {
     }
 }
 
-struct OptionsView_Previews: PreviewProvider {
-    static var previews: some View {
-        OptionsView()
-    }
-}
+//struct OptionsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        OptionsView()
+//    }
+//}

@@ -73,8 +73,3 @@ struct SideMenuRightView: View {
         }
     }
 }
-
-#Preview {
-    SideMenuRightView(isSideMenuOpen: .constant(true))
-        .environmentObject(TaskViewModel())
-}

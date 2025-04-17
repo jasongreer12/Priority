@@ -1,6 +1,6 @@
 //
 //  AddTaskView.swift
-//  Priority 
+//  Priority
 //
 //  Created by Alex on 3/7/25.
 //
@@ -16,7 +16,6 @@ struct AddTaskView: View {
     @State private var details: String = ""
     @State private var hasDueDate: Bool = false
     @State private var dueDate: Date = Date()
-    @State private var estimatedMinutes: Double = 0 
     @State private var selectedCategory: Category?
     @State private var newCategoryTitle: String = ""
     @State private var estimatedHours: Int = 0
@@ -131,7 +130,8 @@ struct AddTaskView: View {
         task.title = title
         task.details = details
         task.isComplete = false
-        task.estimatedTimeToComplete = estimatedMinutes > 0 ? NSNumber(value: estimatedMinutes * 60) : nil
+        let totalMinutes = (estimatedHours * 60) + estimatedQuarterHour
+        task.estimatedTimeToComplete = totalMinutes > 0 ? NSNumber(value: totalMinutes * 60) : nil
         task.dueDate = hasDueDate ? dueDate : nil
         task.sortIndex = Int32(taskViewModel.tasks.count)
         
@@ -146,7 +146,11 @@ struct AddTaskView: View {
         
         do {
             try context.save()
-            taskViewModel.fetchTasks(context: context)
+            if taskViewModel.sortMode == .custom {
+                taskViewModel.fetchTasks(context: context)
+            } else {
+                taskViewModel.sortTasks()
+            }
         } catch {
             print("Failed to save task: \(error.localizedDescription)")
         }

@@ -4,6 +4,7 @@
 //
 //  Created by Alex on 3/7/25.
 //
+
 import SwiftUI
 
 struct ProgressRingView: View {
@@ -47,10 +48,10 @@ struct ProgressRingView: View {
     }
 }
 
-struct ProgressRingView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProgressRingView(progress: 0.75)
-            .previewLayout(.sizeThatFits)
-            .padding()
-    }
-}
+//struct ProgressRingView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ProgressRingView(progress: 0.75)
+//            .previewLayout(.sizeThatFits)
+//            .padding()
+//    }
+//}
