@@ -22,6 +22,11 @@ struct AddTaskView: View {
     @State private var estimatedQuarterHour: Int = 0
     @State private var newCategoryPriority: Int = 5
     
+    private func totalEstimatedSeconds() -> NSNumber? {
+        let totalMinutes = (estimatedHours * 60) + estimatedQuarterHour
+        return totalMinutes > 0 ? NSNumber(value: totalMinutes * 60) : nil
+    }
+    
     var existingTask: Task?
     
     init(existingTask: Task? = nil) {
@@ -110,7 +115,17 @@ struct AddTaskView: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
-                        saveTask()
+                        taskViewModel.saveTask(
+                            existingTask: existingTask,
+                            title: title,
+                            details: details,
+                            dueDate: hasDueDate ? dueDate : nil,
+                            estimatedTimeSeconds: totalEstimatedSeconds(),
+                            category: selectedCategory,
+                            newCategoryTitle: newCategoryTitle,
+                            newCategoryPriority: newCategoryPriority,
+                            context: context
+                        )
                         dismiss()
                     }
                 }
@@ -121,38 +136,6 @@ struct AddTaskView: View {
                     }
                 }
             }
-        }
-    }
-    
-    private func saveTask() {
-        let task = Task(context: context)
-        task.id = UUID()
-        task.title = title
-        task.details = details
-        task.isComplete = false
-        let totalMinutes = (estimatedHours * 60) + estimatedQuarterHour
-        task.estimatedTimeToComplete = totalMinutes > 0 ? NSNumber(value: totalMinutes * 60) : nil
-        task.dueDate = hasDueDate ? dueDate : nil
-        task.sortIndex = Int32(taskViewModel.tasks.count)
-        
-        if let selected = selectedCategory {
-            task.taskCategory = selected
-        } else if !newCategoryTitle.isEmpty {
-            let newCategory = Category(context: context)
-            newCategory.title = newCategoryTitle
-            newCategory.priority = 5 // default
-            task.taskCategory = newCategory
-        }
-        
-        do {
-            try context.save()
-            if taskViewModel.sortMode == .custom {
-                taskViewModel.fetchTasks(context: context)
-            } else {
-                taskViewModel.sortTasks()
-            }
-        } catch {
-            print("Failed to save task: \(error.localizedDescription)")
         }
     }
 }

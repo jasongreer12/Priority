@@ -121,7 +121,7 @@ class TaskViewModel: ObservableObject {
         
         switch sortMode {
         case .custom:
-            fetchTasks(context: TaskManager.shared.viewContext)
+            tasks = tasks.sorted { $0.sortIndex < $1.sortIndex }
         case .prioritized:
             tasks = tasks.sorted { $0.priorityScore > $1.priorityScore }
             for (i, t) in tasks.enumerated() {
@@ -131,15 +131,56 @@ class TaskViewModel: ObservableObject {
     }
     
     private var groupedTasks: [Date: [Task]] {
-          let calendar = Calendar.current
-          return Dictionary(grouping: tasks) { task in
-              calendar.startOfDay(for: task.dueDate ?? Date())
-          }
-      }
-
-      private var sortedDates: [Date] {
-          groupedTasks.keys.sorted()
-      }
+        let calendar = Calendar.current
+        return Dictionary(grouping: tasks) { task in
+            calendar.startOfDay(for: task.dueDate ?? Date())
+        }
+    }
+    
+    private var sortedDates: [Date] {
+        groupedTasks.keys.sorted()
+    }
+    func saveTask(
+        existingTask: Task? = nil,
+        title: String,
+        details: String,
+        dueDate: Date?,
+        estimatedTimeSeconds: NSNumber?,
+        category: Category?,
+        newCategoryTitle: String?,
+        newCategoryPriority: Int,
+        context: NSManagedObjectContext
+    ) {
+        let task = existingTask ?? Task(context: context)
+        
+        if existingTask == nil {
+            task.id = UUID()
+            task.isComplete = false
+            task.sortIndex = Int32(tasks.count)
+        }
+        
+        task.title = title
+        task.details = details
+        task.dueDate = dueDate
+        task.estimatedTimeToComplete = estimatedTimeSeconds
+        
+        if let category = category {
+            task.taskCategory = category
+        } else if let title = newCategoryTitle, !title.isEmpty {
+            let newCategory = Category(context: context)
+            newCategory.title = title
+            newCategory.priority = Int32(newCategoryPriority)
+            task.taskCategory = newCategory
+        }
+        
+        do {
+            try context.save()
+            fetchTasks(context: context)
+        } catch {
+            print("Failed to save task: \(error.localizedDescription)")
+        }
+    }
+    
 }
 
 extension TaskSortMode {
@@ -156,4 +197,6 @@ extension TaskSortMode {
     func saveToDefaults() {
         UserDefaults.standard.set(self.rawValue, forKey: Self.key)
     }
+    
+    
 }
