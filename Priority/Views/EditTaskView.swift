@@ -8,37 +8,134 @@
 import SwiftUI
 
 struct EditTaskView: View {
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.managedObjectContext) private var context
     @EnvironmentObject var taskViewModel: TaskViewModel
+    @Environment(\.dismiss) private var dismiss
     
-    @ObservedObject var task: Task
+    @State private var title: String = ""
+    @State private var details: String = ""
+    @State private var hasDueDate: Bool = false
+    @State private var dueDate: Date = Date()
+    @State private var selectedCategory: Category?
+    @State private var newCategoryTitle: String = ""
+    @State private var estimatedHours: Int = 0
+    @State private var estimatedQuarterHour: Int = 0
+    @State private var newCategoryPriority: Int = 5
     
-    @State private var title: String
-    @State private var details: String
-    
-    init(task: Task) {
-        self.task = task
-        _title = State(initialValue: task.title)
-        _details = State(initialValue: task.details)
+    private func totalEstimatedSeconds() -> NSNumber? {
+        let totalMinutes = (estimatedHours * 60) + estimatedQuarterHour
+        return totalMinutes > 0 ? NSNumber(value: totalMinutes * 60) : nil
     }
     
+    var existingTask: Task?
+    
+    init(existingTask: Task? = nil) {
+        self.existingTask = existingTask
+        
+        _title = State(initialValue: existingTask?.title ?? "")
+        _details = State(initialValue: existingTask?.details ?? "")
+        _hasDueDate = State(initialValue: existingTask?.dueDate != nil)
+        _dueDate = State(initialValue: existingTask?.dueDate ?? Date())
+        
+        let seconds = existingTask?.estimatedTimeToComplete?.doubleValue ?? 0
+        let totalMinutes = Int(seconds / 60)
+        _estimatedHours = State(initialValue: totalMinutes / 60)
+        _estimatedQuarterHour = State(initialValue: totalMinutes % 60)
+        
+        _selectedCategory = State(initialValue: existingTask?.taskCategory)
+        _newCategoryTitle = State(initialValue: "")
+        _newCategoryPriority = State(initialValue: 5)
+    }
+    
+    @FetchRequest(entity: Category.entity(), sortDescriptors: [])
+    private var categories: FetchedResults<Category>
+    
     var body: some View {
-        Form {
-            Section(header: Text("Task Info")) {
-                TextField("Title", text: $title)
-                TextField("Details", text: $details)
+        NavigationView {
+            Form {
+                Section(header: Text("Task Info")) {
+                    TextField("Title", text: $title)
+                    TextField("Details", text: $details)
+                }
+                
+                Section(header: Text("Due Date")) {
+                    Toggle("Add Due Date", isOn: $hasDueDate)
+                    if hasDueDate {
+                        DatePicker("Due Date", selection: $dueDate, displayedComponents: [.date, .hourAndMinute])
+                    }
+                }
+                
+                Section(header: Text("Estimated Time")) {
+                    HStack {
+                        Picker("Hours", selection: $estimatedHours) {
+                            ForEach(0..<13) { hour in
+                                Text("\(hour) hr").tag(hour)
+                            }
+                        }
+                        .pickerStyle(.wheel)
+                        .frame(width: 100)
+                        
+                        Picker("Minutes", selection: $estimatedQuarterHour) {
+                            ForEach([0, 15, 30, 45], id: \.self) { minute in
+                                Text("\(minute) min").tag(minute)
+                            }
+                        }
+                        .pickerStyle(.wheel)
+                        .frame(width: 100)
+                    }
+                    
+                    Text("Total: \(estimatedHours) hr \(estimatedQuarterHour) min")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                
+                Section(header: Text("Category")) {
+                    Picker("Select Category", selection: $selectedCategory) {
+                        Text("None").tag(Category?.none)
+                        ForEach(categories, id: \.self) { category in
+                            Text(category.title ?? "Untitled").tag(Category?.some(category))
+                            
+                            
+                        }
+                    }
+                    
+                    TextField("Or Create New Category", text: $newCategoryTitle)
+                    if !newCategoryTitle.isEmpty {
+                        VStack(alignment: .leading) {
+                            Text("Priority: \(newCategoryPriority)")
+                            Slider(value: Binding(
+                                get: { Double(newCategoryPriority) },
+                                set: { newCategoryPriority = Int($0) }
+                            ), in: 0...10, step: 1)
+                        }
+                    }
+                }
             }
-            
-            Button(action: {
-                // Update the existing task
-                taskViewModel.updateTask(task, title: title, details: details)
-                presentationMode.wrappedValue.dismiss()
-            }) {
-                Text("Save Changes")
-                    .frame(maxWidth: .infinity)
+            .navigationTitle(existingTask == nil ? "New Task" : "Edit Task")
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        taskViewModel.saveTask(
+                            existingTask: existingTask,
+                            title: title,
+                            details: details,
+                            dueDate: hasDueDate ? dueDate : nil,
+                            estimatedTimeSeconds: totalEstimatedSeconds(),
+                            category: selectedCategory,
+                            newCategoryTitle: newCategoryTitle,
+                            newCategoryPriority: newCategoryPriority,
+                            context: context
+                        )
+                        dismiss()
+                    }
+                }
+                
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                }
             }
-            .disabled(title.isEmpty)
         }
-        .navigationTitle("Edit Task")
     }
 }

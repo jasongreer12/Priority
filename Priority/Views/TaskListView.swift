@@ -12,16 +12,16 @@ struct TaskListView: View {
     
     var body: some View {
         VStack {
-            if taskViewModel.displayedTasks.isEmpty {
+            if taskViewModel.tasks.isEmpty {
                 Text("No tasks yet!")
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 List {
-                    ForEach(taskViewModel.displayedTasks, id: \.objectID) { task in
+                    ForEach(taskViewModel.tasks, id: \.objectID) { task in
                         TaskRowView(task: task)
                     }
-//                    .onMove(perform: taskViewModel.sortMode == .custom ? taskViewModel.reorderTasks : { _, _ in })
+                    //                    .onMove(perform: taskViewModel.sortMode == .custom ? taskViewModel.reorderTasks : { _, _ in })
                 }
                 .listStyle(PlainListStyle())
             }

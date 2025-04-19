@@ -59,7 +59,7 @@ struct TaskRowView: View {
             }
         }
         .sheet(isPresented: $isEditing) {
-            AddTaskView(existingTask: task)
+            EditTaskView(existingTask: task)
                 .environment(\.managedObjectContext, moc)
                 .environmentObject(taskViewModel)
         }
