@@ -29,20 +29,6 @@ class TaskViewModel: ObservableObject {
         sortTasks()
     }
     
-    var displayedTasks: [Task] {
-        let sorted: [Task]
-        switch sortMode {
-        case .custom:
-            sorted = tasks.sorted { $0.sortIndex < $1.sortIndex }
-        case .prioritized:
-            sorted = tasks.sorted { $0.priorityScore > $1.priorityScore }
-        }
-        
-        let incomplete = sorted.filter { !$0.isComplete }
-        let complete = sorted.filter { $0.isComplete }
-        return incomplete + complete
-    }
-    
     var completionPercentage: Double {
         let total = tasks.count
         let completed = tasks.filter { $0.isComplete }.count
@@ -59,33 +45,6 @@ class TaskViewModel: ObservableObject {
             }
         } catch {
             print("Failed to fetch tasks: \(error)")
-        }
-    }
-    
-    func addTask(
-        title: String,
-        details: String = "",
-        isComplete: Bool = false,
-        category: Category? = nil,
-        dueDate: Date? = nil,
-        estimatedTimeToComplete: NSNumber? = nil,
-        context: NSManagedObjectContext
-    ) {
-        let newTask = Task(context: context)
-        newTask.id = UUID()
-        newTask.title = title
-        newTask.details = details
-        newTask.isComplete = isComplete
-        newTask.taskCategory = category
-        newTask.dueDate = dueDate
-        newTask.estimatedTimeToComplete = estimatedTimeToComplete
-        newTask.sortIndex = Int32(tasks.count)
-        
-        do {
-            try context.save()
-            fetchTasks(context: context)
-        } catch {
-            print("Failed to add task: \(error)")
         }
     }
     
@@ -106,22 +65,14 @@ class TaskViewModel: ObservableObject {
         }
     }
     
-    func deleteTask(_ task: Task) {
-        tasks.removeAll { $0.id == task.id }
-    }
-    
-    func updateTask(_ task: Task, title: String, details: String) {
-        guard let index = tasks.firstIndex(where: { $0.id == task.id }) else { return }
-        tasks[index].title = title
-        tasks[index].details = details
-    }
-    
     func sortTasks() {
         print("Sorting tasks with mode: \(sortMode)")
         
         switch sortMode {
         case .custom:
             tasks = tasks.sorted { $0.sortIndex < $1.sortIndex }
+            for (i, t) in tasks.enumerated() {
+                print("\(i): \(t.title) — priorityScore: \(t.priorityScore)")}
         case .prioritized:
             tasks = tasks.sorted { $0.priorityScore > $1.priorityScore }
             for (i, t) in tasks.enumerated() {
@@ -140,6 +91,7 @@ class TaskViewModel: ObservableObject {
     private var sortedDates: [Date] {
         groupedTasks.keys.sorted()
     }
+    
     func saveTask(
         existingTask: Task? = nil,
         title: String,
@@ -180,7 +132,6 @@ class TaskViewModel: ObservableObject {
             print("Failed to save task: \(error.localizedDescription)")
         }
     }
-    
 }
 
 extension TaskSortMode {
@@ -197,6 +148,4 @@ extension TaskSortMode {
     func saveToDefaults() {
         UserDefaults.standard.set(self.rawValue, forKey: Self.key)
     }
-    
-    
 }
