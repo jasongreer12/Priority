@@ -201,6 +201,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				D8798AA92DA344FA007C3E65 /* XCRemoteSwiftPackageReference "Auth0" */,
+				D86EFABC2DB6FA09004F8316 /* XCRemoteSwiftPackageReference "SimpleKeychain" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = FAF550B52D7B720E009C46D5 /* Products */;
@@ -525,6 +526,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D86EFABC2DB6FA09004F8316 /* XCRemoteSwiftPackageReference "SimpleKeychain" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/SimpleKeychain";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.0;
+			};
+		};
 		D8798AA92DA344FA007C3E65 /* XCRemoteSwiftPackageReference "Auth0" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/Auth0.swift";

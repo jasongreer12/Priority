@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Auth0
+import SimpleKeychain
 
 struct ContentView: View {
     @StateObject var taskViewModel = TaskViewModel()
@@ -15,11 +16,12 @@ struct ContentView: View {
     @State private var showAddTaskSheet = false
     @State private var isProfileMenuOpen = false
     @State private var showCalendarSheet = false
-    @State var user: User?
+    @State var user: User? // when nil, user is not logged in
+    let simpleKeychain = SimpleKeychain(service: "Auth0") // to save user credentials
     
     var body: some View {
         Group {
-            if false {
+            if user == nil {
                 VStack(spacing: 20) {
                     Text("Welcome to Priority!")
                         .font(.largeTitle)
@@ -117,15 +119,32 @@ struct ContentView: View {
                 }
             }
         }
+        .onAppear {
+            print("trying to load user from keychain")
+            loadUserFromKeychain()
+        }
+    }
+    private func loadUserFromKeychain() {
+        let keychain = SimpleKeychain(service: "Auth0")
+
+        if let idToken = try? keychain.string(forKey: "idToken"),
+           let savedUser = User(from: idToken) {
+            self.user = savedUser
+            print("Loaded user from Keychain.")
+        } else {
+            print("No stored credentials or parsing failed.")
+        }
     }
 }
 
 extension ContentView {
+    
+    
     func login() {
         print("login called in extension")
         Auth0
             .webAuth()
-            .useEphemeralSession() // No SSO, therefore no alert box
+            //.useEphemeralSession() // No SSO, therefore no alert box
             .parameters(["prompt": "login"]) // Ignore the cookie (if present) and show the login page
         //.useHTTPS() // Uncomment if needed for iOS 17.4+ / macOS 14.4+
             .start { result in
@@ -135,6 +154,14 @@ extension ContentView {
                         if let newUser = User(from: credentials.idToken) {
                             print("User successfully parsed: \(newUser)")
                             self.user = newUser
+                            do { // try to save users login info to prevent logging in again
+                                try simpleKeychain.set(credentials.idToken, forKey: "idToken")
+                                try simpleKeychain.set(credentials.accessToken, forKey: "accessToken")
+                            }
+                            catch {
+                                print("Keychain save failed: \(error)")
+                                
+                            }
                         } else {
                             print("Failed to parse user from token")
                         }
@@ -156,6 +183,11 @@ extension ContentView {
                 case .success:
                     DispatchQueue.main.async {
                         self.user = nil
+                        do {
+                            try simpleKeychain.deleteAll()
+                        } catch {
+                            print("Failed to clear Keychain: \(error)")
+                        }
                     }
                 case .failure(let error):
                     print("Logout failed with: \(error)")
@@ -163,6 +195,8 @@ extension ContentView {
             }
     }
 }
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static let previewModel = TaskViewModel()

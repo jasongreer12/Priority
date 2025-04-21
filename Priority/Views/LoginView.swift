@@ -7,9 +7,11 @@
 
 import SwiftUI
 import Auth0
+import SimpleKeychain
 
 struct LoginView: View {
     @State var user: User?
+    let simpleKeychain = SimpleKeychain(service: "Auth0") // to save user credentials
     
     var body: some View {
         if let user = self.user {
@@ -41,6 +43,14 @@ extension LoginView {
                         if let newUser = User(from: credentials.idToken) {
                             print("User successfully parsed: \(newUser)")
                             self.user = newUser
+                            do {
+                                try simpleKeychain.set(credentials.idToken, forKey: "idToken")
+                                try simpleKeychain.set(credentials.accessToken, forKey: "accessToken")
+                            }
+                            catch {
+                                print("Keychain save failed: \(error)")
+                                
+                            }
                         } else {
                             print("Failed to parse user from token")
                         }
