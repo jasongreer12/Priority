@@ -28,15 +28,6 @@ struct SideMenuRightView: View {
                     .padding(.vertical, 1)
                 
                 Button(action: {
-                    taskViewModel.sortMode = .custom
-                    taskViewModel.sortTasks()
-                    isSideMenuOpen = false
-                }) {
-                    Label("Sort by Custom Order", systemImage: "line.3.horizontal")
-                }
-                .padding()
-                
-                Button(action: {
                     taskViewModel.sortMode = .prioritized
                     taskViewModel.sortTasks()
                     isSideMenuOpen = false
