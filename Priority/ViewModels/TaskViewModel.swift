@@ -15,6 +15,8 @@ enum TaskSortMode: String {
 }
 
 class TaskViewModel: ObservableObject {
+    //Use Fetch Request, not a published variable. In the Task model, there is a static function all() that fetches the sorted data. You can modify that to take in variables and sort by whatever.
+    //@FetchRequest(fetchRequest: Task.all()) private var tasks
     @Published private(set) var tasks: [Task] = []
     @Published var sortMode: TaskSortMode = TaskSortMode.loadFromDefaults() {
         didSet {
