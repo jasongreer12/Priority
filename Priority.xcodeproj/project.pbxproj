@@ -15,6 +15,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		62F0203F2DB172DF0018DFAA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAF550AC2D7B720E009C46D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAF550B32D7B720E009C46D5;
+			remoteInfo = Priority;
+		};
+		62F0204C2DB174A80018DFAA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAF550AC2D7B720E009C46D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAF550B32D7B720E009C46D5;
+			remoteInfo = Priority;
+		};
 		FA7FBE9C2DA8B8C2002EF557 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FAF550AC2D7B720E009C46D5 /* Project object */;
@@ -39,6 +53,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		62F0203B2DB172DF0018DFAA /* PriorityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PriorityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		62F020482DB174A80018DFAA /* PriorityTesting.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PriorityTesting.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8798AAE2DA345F9007C3E65 /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Auth0.plist; sourceTree = "<group>"; };
 		FA7FBE8C2DA8B8BF002EF557 /* PriorityWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PriorityWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA7FBE8E2DA8B8BF002EF557 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -57,6 +73,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		62F020492DB174A80018DFAA /* PriorityTesting */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PriorityTesting;
+			sourceTree = "<group>";
+		};
 		FA7FBE922DA8B8C0002EF557 /* PriorityWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -73,6 +94,20 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		62F020382DB172DF0018DFAA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		62F020452DB174A80018DFAA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FA7FBE892DA8B8BF002EF557 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -108,6 +143,7 @@
 				D8798AAE2DA345F9007C3E65 /* Auth0.plist */,
 				FAF550B62D7B720E009C46D5 /* Priority */,
 				FA7FBE922DA8B8C0002EF557 /* PriorityWidget */,
+				62F020492DB174A80018DFAA /* PriorityTesting */,
 				FA7FBE8D2DA8B8BF002EF557 /* Frameworks */,
 				FAF550B52D7B720E009C46D5 /* Products */,
 			);
@@ -118,6 +154,8 @@
 			children = (
 				FAF550B42D7B720E009C46D5 /* Priority.app */,
 				FA7FBE8C2DA8B8BF002EF557 /* PriorityWidgetExtension.appex */,
+				62F0203B2DB172DF0018DFAA /* PriorityTests.xctest */,
+				62F020482DB174A80018DFAA /* PriorityTesting.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -125,6 +163,49 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		62F0203A2DB172DF0018DFAA /* PriorityTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 62F020432DB172DF0018DFAA /* Build configuration list for PBXNativeTarget "PriorityTests" */;
+			buildPhases = (
+				62F020372DB172DF0018DFAA /* Sources */,
+				62F020382DB172DF0018DFAA /* Frameworks */,
+				62F020392DB172DF0018DFAA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				62F020402DB172DF0018DFAA /* PBXTargetDependency */,
+			);
+			name = PriorityTests;
+			packageProductDependencies = (
+			);
+			productName = PriorityTests;
+			productReference = 62F0203B2DB172DF0018DFAA /* PriorityTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		62F020472DB174A80018DFAA /* PriorityTesting */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 62F0204E2DB174A80018DFAA /* Build configuration list for PBXNativeTarget "PriorityTesting" */;
+			buildPhases = (
+				62F020442DB174A80018DFAA /* Sources */,
+				62F020452DB174A80018DFAA /* Frameworks */,
+				62F020462DB174A80018DFAA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				62F0204D2DB174A80018DFAA /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				62F020492DB174A80018DFAA /* PriorityTesting */,
+			);
+			name = PriorityTesting;
+			packageProductDependencies = (
+			);
+			productName = PriorityTesting;
+			productReference = 62F020482DB174A80018DFAA /* PriorityTesting.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		FA7FBE8B2DA8B8BF002EF557 /* PriorityWidgetExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FA7FBEA32DA8B8C2002EF557 /* Build configuration list for PBXNativeTarget "PriorityWidgetExtension" */;
@@ -182,6 +263,14 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					62F0203A2DB172DF0018DFAA = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = FAF550B32D7B720E009C46D5;
+					};
+					62F020472DB174A80018DFAA = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = FAF550B32D7B720E009C46D5;
+					};
 					FA7FBE8B2DA8B8BF002EF557 = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -209,11 +298,27 @@
 			targets = (
 				FAF550B32D7B720E009C46D5 /* Priority */,
 				FA7FBE8B2DA8B8BF002EF557 /* PriorityWidgetExtension */,
+				62F0203A2DB172DF0018DFAA /* PriorityTests */,
+				62F020472DB174A80018DFAA /* PriorityTesting */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		62F020392DB172DF0018DFAA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		62F020462DB174A80018DFAA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FA7FBE8A2DA8B8BF002EF557 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -232,6 +337,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		62F020372DB172DF0018DFAA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		62F020442DB174A80018DFAA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FA7FBE882DA8B8BF002EF557 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -249,6 +368,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		62F020402DB172DF0018DFAA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAF550B32D7B720E009C46D5 /* Priority */;
+			targetProxy = 62F0203F2DB172DF0018DFAA /* PBXContainerItemProxy */;
+		};
+		62F0204D2DB174A80018DFAA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAF550B32D7B720E009C46D5 /* Priority */;
+			targetProxy = 62F0204C2DB174A80018DFAA /* PBXContainerItemProxy */;
+		};
 		FA7FBE9D2DA8B8C2002EF557 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FA7FBE8B2DA8B8BF002EF557 /* PriorityWidgetExtension */;
@@ -257,6 +386,74 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		62F020412DB172DF0018DFAA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Erin.PriorityTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Priority.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Priority";
+			};
+			name = Debug;
+		};
+		62F020422DB172DF0018DFAA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Erin.PriorityTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Priority.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Priority";
+			};
+			name = Release;
+		};
+		62F0204F2DB174A80018DFAA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Erin.PriorityTesting;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Priority.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Priority";
+			};
+			name = Debug;
+		};
+		62F020502DB174A80018DFAA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Erin.PriorityTesting;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Priority.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Priority";
+			};
+			name = Release;
+		};
 		FA7FBEA02DA8B8C2002EF557 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -495,6 +692,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		62F020432DB172DF0018DFAA /* Build configuration list for PBXNativeTarget "PriorityTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				62F020412DB172DF0018DFAA /* Debug */,
+				62F020422DB172DF0018DFAA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		62F0204E2DB174A80018DFAA /* Build configuration list for PBXNativeTarget "PriorityTesting" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				62F0204F2DB174A80018DFAA /* Debug */,
+				62F020502DB174A80018DFAA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FA7FBEA32DA8B8C2002EF557 /* Build configuration list for PBXNativeTarget "PriorityWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
