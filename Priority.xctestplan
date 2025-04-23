@@ -1,0 +1,29 @@
+{
+  "configurations" : [
+    {
+      "id" : "2123E4C2-BE83-4462-B426-27CB3B5BF300",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Priority.xcodeproj",
+      "identifier" : "FAF550B32D7B720E009C46D5",
+      "name" : "Priority"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Priority.xcodeproj",
+        "identifier" : "62F020562DB9A9530018DFAA",
+        "name" : "PriorityTesting2"
+      }
+    }
+  ],
+  "version" : 1
+}
