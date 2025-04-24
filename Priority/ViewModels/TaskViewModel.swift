@@ -24,7 +24,7 @@ class TaskViewModel: ObservableObject {
     
     init() {
         print(" TaskViewModel INIT")
-        sortMode = TaskSortMode.loadFromDefaults()
+        sortMode = .prioritized
         fetchTasks(context: TaskManager.shared.viewContext)
         sortTasks()
     }
@@ -73,19 +73,18 @@ class TaskViewModel: ObservableObject {
         switch sortMode {
         case .custom:
             sorted = tasks.sorted { $0.sortIndex < $1.sortIndex }
-            for (i, t) in tasks.enumerated() {
-                print("\(i): \(t.title) — priorityScore: \(t.priorityScore)")}
         case .prioritized:
             sorted = tasks.sorted { $0.priorityScore > $1.priorityScore }
-            for (i, t) in tasks.enumerated() {
-                print("\(i): \(t.title) — priorityScore: \(t.priorityScore)")
-            }
         }
         
         let incomplete = sorted.filter { !$0.isComplete }
         let complete = sorted.filter { $0.isComplete }
         
         tasks = incomplete + complete
+        
+        for (i, t) in tasks.enumerated() {
+            print("\(i): \(t.title) — priorityScore: \(t.priorityScore)")
+        }
     }
     
     private var groupedTasks: [Date: [Task]] {

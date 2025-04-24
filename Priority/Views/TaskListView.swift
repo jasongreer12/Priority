@@ -26,7 +26,7 @@ struct TaskListView: View {
             }
         }
         .onChange(of: taskViewModel.sortMode) {
-            if taskViewModel.sortMode == .custom {
+            if taskViewModel.sortMode == .prioritized {
                 taskViewModel.fetchTasks(context: TaskManager.shared.viewContext)
             } else {
                 taskViewModel.sortTasks()
