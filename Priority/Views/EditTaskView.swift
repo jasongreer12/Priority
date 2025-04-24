@@ -46,6 +46,7 @@ struct EditTaskView: View {
         _selectedCategory = State(initialValue: existingTask?.taskCategory)
         _newCategoryTitle = State(initialValue: "")
         _newCategoryPriority = State(initialValue: 5)
+        _priority = State(initialValue: Int(existingTask?.priority?.intValue ?? 0))
     }
     
     @FetchRequest(entity: Category.entity(), sortDescriptors: [])
@@ -56,7 +57,6 @@ struct EditTaskView: View {
             Form {
                 Section(header: Text("Task Info")) {
                     TextField("Title", text: $title)
-                    TextField("Details", text: $details)
                 }
                 
                 Section(header: Text("Due Date")) {
