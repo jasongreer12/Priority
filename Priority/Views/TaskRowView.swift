@@ -28,7 +28,6 @@ struct TaskRowView: View {
             
             Spacer()
             
-            // DEVELOPMENT ONLY
             Text("\(task.priorityScore, specifier: "%.1f")")
                 .font(.caption)
                 .foregroundColor(.secondary)
@@ -37,6 +36,7 @@ struct TaskRowView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             toggleComplete()
+            taskViewModel.sortTasks()
         }
         .swipeActions(edge: .leading, allowsFullSwipe: true) {
             Button(action: toggleComplete) {
@@ -68,8 +68,8 @@ struct TaskRowView: View {
     private func toggleComplete() {
         task.isComplete.toggle()
         save()
-//        taskViewModel.fetchTasks(context: moc)
         taskViewModel.sortTasks()
+        save()
     }
     
     private func delete() {
@@ -88,17 +88,3 @@ struct TaskRowView: View {
         }
     }
 }
-
-//struct TaskRowView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let context = TaskManager.shared.viewContext
-//        let task = Task(context: context)
-//        task.title = "Task Title"
-//        task.isComplete = false
-//        
-//        return TaskRowView(task: task)
-//            .environment(\.managedObjectContext, context)
-//            .previewLayout(.sizeThatFits)
-//            .padding()
-//    }
-//}

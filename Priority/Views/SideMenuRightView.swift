@@ -28,18 +28,6 @@ struct SideMenuRightView: View {
                     .padding(.vertical, 1)
                 
                 Button(action: {
-                    taskViewModel.sortMode = .prioritized
-                    taskViewModel.sortTasks()
-                    isSideMenuOpen = false
-                }) {
-                    Label("Sort PRIORITIZED", systemImage: "line.3.horizontal")
-                }
-                .padding()
-                
-                Divider()
-                    .padding(.vertical, 1)
-                
-                Button(action: {
                     showOptionsSheet = true
                 }) {
                     Label("More Options", systemImage: "gearshape")

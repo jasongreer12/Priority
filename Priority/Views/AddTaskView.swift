@@ -21,6 +21,7 @@ struct AddTaskView: View {
     @State private var estimatedHours: Int = 0
     @State private var estimatedQuarterHour: Int = 0
     @State private var newCategoryPriority: Int = 5
+    @State private var priority: Int = 0
     
     private func totalEstimatedSeconds() -> NSNumber? {
         let totalMinutes = (estimatedHours * 60) + estimatedQuarterHour
@@ -89,25 +90,13 @@ struct AddTaskView: View {
                         .foregroundColor(.secondary)
                 }
                 
-                Section(header: Text("Category")) {
-                    Picker("Select Category", selection: $selectedCategory) {
-                        Text("None").tag(Category?.none)
-                        ForEach(categories, id: \.self) { category in
-                            Text(category.title ?? "Untitled").tag(Category?.some(category))
-                            
-                            
-                        }
-                    }
-                    
-                    TextField("Or Create New Category", text: $newCategoryTitle)
-                    if !newCategoryTitle.isEmpty {
-                        VStack(alignment: .leading) {
-                            Text("Priority: \(newCategoryPriority)")
-                            Slider(value: Binding(
-                                get: { Double(newCategoryPriority) },
-                                set: { newCategoryPriority = Int($0) }
-                            ), in: 0...10, step: 1)
-                        }
+                Section(header: Text("Priority")) {
+                    VStack(alignment: .leading) {
+                        Text(priority == 0 ? "Priority: Not Set" : "Priority: \(priority)")
+                        Slider(value: Binding(
+                            get: { Double(priority) },
+                            set: { priority = Int($0) }
+                        ), in: 0...10, step: 1)
                     }
                 }
             }
@@ -122,6 +111,7 @@ struct AddTaskView: View {
                             dueDate: hasDueDate ? dueDate : nil,
                             estimatedTimeSeconds: totalEstimatedSeconds(),
                             category: selectedCategory,
+                            priority: priority,
                             newCategoryTitle: newCategoryTitle,
                             newCategoryPriority: newCategoryPriority,
                             context: context

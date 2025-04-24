@@ -17,6 +17,7 @@ final class Task: NSManagedObject {
     @NSManaged var estimatedTimeToComplete: NSNumber?
     @NSManaged var sortIndex: Int32
     @NSManaged var taskCategory: Category?
+    @NSManaged var priority: NSNumber?
     
     override func awakeFromInsert() {
         super.awakeFromInsert()
@@ -40,9 +41,8 @@ extension Task {
     }
     
     var priorityScore: Double {
-        let categoryWeight = Double(taskCategory?.priority ?? 0)
+        let priorityWeight = Double(truncating: priority ?? NSNumber(value: 0))
         
-        // UI: needs to be in increments of 15
         let completionTimeWeight: Double = {
             guard let time = estimatedTimeToComplete?.doubleValue else { return 0 }
             
@@ -58,12 +58,12 @@ extension Task {
             let hoursUntilDue = max(1, secondsUntilDue / 3600)
             
             if secondsUntilDue < 0 {
-                return 10 // overdue tasks
+                return 10
             }
             
             return min(10, max(0, 10 - log(hoursUntilDue)))
         }()
         
-        return categoryWeight + completionTimeWeight + dueDateWeight
+        return priorityWeight + completionTimeWeight + dueDateWeight
     }
 }

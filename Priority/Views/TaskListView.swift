@@ -21,7 +21,6 @@ struct TaskListView: View {
                     ForEach(taskViewModel.tasks, id: \.objectID) { task in
                         TaskRowView(task: task)
                     }
-                    //                    .onMove(perform: taskViewModel.sortMode == .custom ? taskViewModel.reorderTasks : { _, _ in })
                 }
                 .listStyle(PlainListStyle())
             }
