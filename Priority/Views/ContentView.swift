@@ -116,6 +116,8 @@ struct ContentView: View {
                     taskViewModel.sortTasks()}
                 .sheet(isPresented: $showCalendarSheet) {
                     CalendarView()
+                        .environmentObject(taskViewModel)
+                        .environment(\.managedObjectContext, TaskManager.shared.viewContext)
                 }
             }
         }
