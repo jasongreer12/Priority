@@ -24,7 +24,7 @@ class TaskViewModel: ObservableObject {
     
     init() {
         print(" TaskViewModel INIT")
-        sortMode = TaskSortMode.loadFromDefaults()
+        sortMode = .prioritized
         fetchTasks(context: TaskManager.shared.viewContext)
         sortTasks()
     }
@@ -68,16 +68,22 @@ class TaskViewModel: ObservableObject {
     func sortTasks() {
         print("Sorting tasks with mode: \(sortMode)")
         
+        let sorted: [Task]
+        
         switch sortMode {
         case .custom:
-            tasks = tasks.sorted { $0.sortIndex < $1.sortIndex }
-            for (i, t) in tasks.enumerated() {
-                print("\(i): \(t.title) — priorityScore: \(t.priorityScore)")}
+            sorted = tasks.sorted { $0.sortIndex < $1.sortIndex }
         case .prioritized:
-            tasks = tasks.sorted { $0.priorityScore > $1.priorityScore }
-            for (i, t) in tasks.enumerated() {
-                print("\(i): \(t.title) — priorityScore: \(t.priorityScore)")
-            }
+            sorted = tasks.sorted { $0.priorityScore > $1.priorityScore }
+        }
+        
+        let incomplete = sorted.filter { !$0.isComplete }
+        let complete = sorted.filter { $0.isComplete }
+        
+        tasks = incomplete + complete
+        
+        for (i, t) in tasks.enumerated() {
+            print("\(i): \(t.title) — priorityScore: \(t.priorityScore)")
         }
     }
     
@@ -99,6 +105,7 @@ class TaskViewModel: ObservableObject {
         dueDate: Date?,
         estimatedTimeSeconds: NSNumber?,
         category: Category?,
+        priority: Int?,
         newCategoryTitle: String?,
         newCategoryPriority: Int,
         context: NSManagedObjectContext
@@ -115,6 +122,7 @@ class TaskViewModel: ObservableObject {
         task.details = details
         task.dueDate = dueDate
         task.estimatedTimeToComplete = estimatedTimeSeconds
+        task.priority = NSNumber(value: priority ?? 0)
         
         if let category = category {
             task.taskCategory = category
@@ -128,6 +136,7 @@ class TaskViewModel: ObservableObject {
         do {
             try context.save()
             fetchTasks(context: context)
+            sortTasks()
         } catch {
             print("Failed to save task: \(error.localizedDescription)")
         }

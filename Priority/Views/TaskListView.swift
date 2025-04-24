@@ -21,13 +21,12 @@ struct TaskListView: View {
                     ForEach(taskViewModel.tasks, id: \.objectID) { task in
                         TaskRowView(task: task)
                     }
-                    //                    .onMove(perform: taskViewModel.sortMode == .custom ? taskViewModel.reorderTasks : { _, _ in })
                 }
                 .listStyle(PlainListStyle())
             }
         }
         .onChange(of: taskViewModel.sortMode) {
-            if taskViewModel.sortMode == .custom {
+            if taskViewModel.sortMode == .prioritized {
                 taskViewModel.fetchTasks(context: TaskManager.shared.viewContext)
             } else {
                 taskViewModel.sortTasks()
