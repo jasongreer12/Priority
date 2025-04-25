@@ -44,10 +44,12 @@ extension Task {
         let priorityWeight = Double(truncating: priority ?? NSNumber(value: 0))
         
         let completionTimeWeight: Double = {
+            let maxHoursForFullWeight = 12.75
+            
             guard let time = estimatedTimeToComplete?.doubleValue else { return 0 }
             
             let hours = time / 3600
-            return min(10, max(0, hours / 1.5))
+            return min(10, max(0, hours / (maxHoursForFullWeight / 10)))
         }()
         
         let dueDateWeight: Double = {
